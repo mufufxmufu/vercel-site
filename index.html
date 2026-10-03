@@ -6,13 +6,7 @@
 
   <meta charset="UTF-8">
 
-  <meta
-
-    name="viewport"
-
-    content="width=device-width, initial-scale=1.0"
-
-  >
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
   <title>136 STUDIO</title>
 
@@ -62,9 +56,11 @@
 
       padding: 16px 20px;
 
-      background: rgba(255, 255, 255, 0.95);
+      background: rgba(255,255,255,.96);
 
       border-bottom: 1px solid #e5e5e5;
+
+      backdrop-filter: blur(10px);
 
     }
 
@@ -114,9 +110,15 @@
 
     }
 
+    /* メイン画像 */
+
     .hero {
 
-      min-height: 430px;
+      min-height: 500px;
+
+      position: relative;
+
+      overflow: hidden;
 
       display: flex;
 
@@ -132,19 +134,27 @@
 
         linear-gradient(
 
-          135deg,
+          rgba(0,0,0,.40),
 
-          #d9e7df,
+          rgba(0,0,0,.48)
 
-          #faf5eb
+        ),
 
-        );
+        url("https://images.unsplash.com/photo-1508700115892-45ecd05ae2ad?auto=format&fit=crop&w=1800&q=85")
+
+        center / cover no-repeat;
+
+      color: white;
 
     }
 
     .hero-content {
 
-      max-width: 750px;
+      max-width: 760px;
+
+      position: relative;
+
+      z-index: 2;
 
     }
 
@@ -178,6 +188,8 @@
 
       margin: 0 0 25px;
 
+      text-shadow: 0 3px 20px rgba(0,0,0,.3);
+
     }
 
     .hero p {
@@ -186,7 +198,9 @@
 
       line-height: 2;
 
-      color: #444;
+      color: rgba(255,255,255,.94);
+
+      text-shadow: 0 2px 10px rgba(0,0,0,.35);
 
     }
 
@@ -252,9 +266,7 @@
 
       border-radius: 18px;
 
-      box-shadow:
-
-        0 8px 30px rgba(0, 0, 0, 0.06);
+      box-shadow: 0 8px 30px rgba(0,0,0,.06);
 
       margin-bottom: 20px;
 
@@ -308,13 +320,13 @@
 
       grid-template-columns: 1fr 1fr;
 
-      gap: 12px;
+      gap: 14px;
 
     }
 
     .room {
 
-      padding: 18px;
+      padding: 10px;
 
       text-align: left;
 
@@ -322,9 +334,19 @@
 
       border: 2px solid transparent;
 
-      border-radius: 14px;
+      border-radius: 16px;
 
       cursor: pointer;
+
+      overflow: hidden;
+
+      transition: .2s;
+
+    }
+
+    .room:hover {
+
+      transform: translateY(-2px);
 
     }
 
@@ -336,13 +358,33 @@
 
     }
 
+    /* スタジオ写真 */
+
+    .room-image {
+
+      width: 100%;
+
+      height: 190px;
+
+      object-fit: cover;
+
+      display: block;
+
+      border-radius: 11px;
+
+      margin-bottom: 14px;
+
+      background: #eee;
+
+    }
+
     .room b {
 
       display: block;
 
       font-size: 17px;
 
-      margin-bottom: 6px;
+      margin: 0 8px 6px;
 
     }
 
@@ -352,7 +394,9 @@
 
       color: #666;
 
-      margin: 0;
+      margin: 0 8px 10px;
+
+      line-height: 1.6;
 
     }
 
@@ -528,7 +572,7 @@
 
       .hero {
 
-        min-height: 370px;
+        min-height: 430px;
 
       }
 
@@ -547,6 +591,12 @@
       .room-grid {
 
         grid-template-columns: 1fr;
+
+      }
+
+      .room-image {
+
+        height: 210px;
 
       }
 
@@ -570,630 +620,658 @@
 
 <body>
 
-  <header>
+<header>
 
-    <div class="logo">
+  <div class="logo">
+
+    136 <span>STUDIO</span>
+
+  </div>
+
+  <nav>
+
+    <button onclick="showPage('home')">
+
+      予約する
+
+    </button>
+
+    <button onclick="showPage('mypage')">
+
+      マイページ
+
+    </button>
+
+  </nav>
+
+</header>
+
+<section class="hero">
+
+  <div class="hero-content">
+
+    <div class="brand">
 
       136 <span>STUDIO</span>
 
     </div>
 
-    <nav>
+    <h1>
 
-      <button onclick="showPage('home')">
+      好きな時間に、<br>
 
-        予約する
+      好きなスタイルで。
 
-      </button>
+    </h1>
 
-      <button onclick="showPage('mypage')">
+    <p>
 
-        マイページ
+      ダンス・ヨガ・フィットネス・個人練習など、<br>
 
-      </button>
+      さまざまな用途でご利用いただける
 
-    </nav>
+      レンタルスタジオです。
 
-  </header>
+    </p>
 
-  <section class="hero">
+  </div>
 
-    <div class="hero-content">
+</section>
 
-      <div class="brand">
+<section class="info">
 
-        136 <span>STUDIO</span>
+  <div>
 
-      </div>
+    <b>年中無休</b>
 
-      <h1>
+    <span>9:00〜21:30</span>
 
-        好きな時間に、<br>
+  </div>
 
-        好きなスタイルで。
+  <div>
 
-      </h1>
+    <b>1時間 1,200円</b>
 
-      <p>
+    <span>前後15分サービス</span>
 
-        ダンス・ヨガ・フィットネス・個人練習など、<br>
+  </div>
 
-        さまざまな用途でご利用いただける
+  <div>
 
-        レンタルスタジオです。
+    <b>PayPayのみ</b>
+
+    <span>オンライン決済</span>
+
+  </div>
+
+  <div>
+
+    <b>会員登録制</b>
+
+    <span>スマホから簡単予約</span>
+
+  </div>
+
+</section>
+
+<main class="wrap">
+
+  <section id="home">
+
+    <div class="card">
+
+      <h2>スタジオを予約</h2>
+
+      <p class="small">
+
+        予約時間60分＋前15分・後15分が無料です。
 
       </p>
 
-    </div>
+      <label for="date">
 
-  </section>
+        日付
 
-  <section class="info">
+      </label>
 
-    <div>
+      <input
 
-      <b>年中無休</b>
+        id="date"
 
-      <span>9:00〜21:30</span>
+        type="date"
 
-    </div>
+        onchange="renderSlots()"
 
-    <div>
+      >
 
-      <b>1時間 1,200円</b>
+      <h3>スタジオを選択</h3>
 
-      <span>前後15分サービス</span>
-
-    </div>
-
-    <div>
-
-      <b>PayPayのみ</b>
-
-      <span>オンライン決済</span>
-
-    </div>
-
-    <div>
-
-      <b>会員登録制</b>
-
-      <span>スマホから簡単予約</span>
-
-    </div>
-
-  </section>
-
-  <main class="wrap">
-
-    <section id="home">
-
-      <div class="card">
-
-        <h2>スタジオを予約</h2>
-
-        <p class="small">
-
-          予約時間60分＋前15分・後15分が無料です。
-
-        </p>
-
-        <label for="date">
-
-          日付
-
-        </label>
-
-        <input
-
-          id="date"
-
-          type="date"
-
-          onchange="renderSlots()"
-
-        >
-
-        <h3>スタジオを選択</h3>
-
-        <div class="room-grid">
-
-          <button
-
-            id="roomA"
-
-            class="room"
-
-            onclick="pickRoom('A')"
-
-          >
-
-            <b>136スタジオ</b>
-
-            <p>
-
-              ダンス・ヨガ・フィットネス・個人練習など
-
-            </p>
-
-          </button>
-
-          <button
-
-            id="roomB"
-
-            class="room"
-
-            onclick="pickRoom('B')"
-
-          >
-
-            <b>136パーソナル</b>
-
-            <p>
-
-              少人数・パーソナルレッスン向け
-
-            </p>
-
-          </button>
-
-        </div>
-
-        <h3>時間を選択</h3>
-
-        <div
-
-          id="slots"
-
-          class="slots"
-
-        ></div>
-
-        <div class="price">
-
-          <div>
-
-            <b>利用料金</b>
-
-            <div class="small">
-
-              1時間
-
-            </div>
-
-          </div>
-
-          <strong>
-
-            ¥1,200
-
-          </strong>
-
-        </div>
+      <div class="room-grid">
 
         <button
 
-          class="reserve-btn"
+          id="roomA"
 
-          onclick="reserve()"
+          class="room"
+
+          onclick="pickRoom('A')"
 
         >
 
-          予約内容を確認する
+          <img
+
+            class="room-image"
+
+            src="https://images.unsplash.com/photo-1524594152303-9fd13543fe6e?auto=format&fit=crop&w=900&q=80"
+
+            alt="136スタジオ"
+
+            loading="lazy"
+
+            onerror="this.style.display='none'"
+
+          >
+
+          <b>136スタジオ</b>
+
+          <p>
+
+            ダンス・ヨガ・フィットネス・個人練習など
+
+          </p>
+
+        </button>
+
+        <button
+
+          id="roomB"
+
+          class="room"
+
+          onclick="pickRoom('B')"
+
+        >
+
+          <img
+
+            class="room-image"
+
+            src="https://images.unsplash.com/photo-1534438327276-14e5300c3a48?auto=format&fit=crop&w=900&q=80"
+
+            alt="136パーソナル"
+
+            loading="lazy"
+
+            onerror="this.style.display='none'"
+
+          >
+
+          <b>136パーソナル</b>
+
+          <p>
+
+            少人数・パーソナルレッスン向け
+
+          </p>
 
         </button>
 
       </div>
 
-    </section>
+      <h3>時間を選択</h3>
 
-    <section
+      <div
 
-      id="mypage"
+        id="slots"
 
-      class="hidden"
+        class="slots"
 
-    >
+      ></div>
 
-      <div class="card">
+      <div class="price">
 
-        <h2>マイページ</h2>
+        <div>
 
-        <p class="small">
+          <b>利用料金</b>
 
-          予約履歴を確認できます。
+          <div class="small">
 
-        </p>
+            1時間
 
-        <div id="history"></div>
+          </div>
+
+        </div>
+
+        <strong>
+
+          ¥1,200
+
+        </strong>
 
       </div>
 
-    </section>
+      <button
 
-  </main>
+        class="reserve-btn"
 
-  <footer>
+        onclick="reserve()"
 
-    © 136 STUDIO
+      >
 
-  </footer>
+        予約内容を確認する
 
-  <script>
+      </button>
 
-    let selectedRoom = "";
+    </div>
 
-    let selectedSlot = "";
+  </section>
 
-    const times = [
+  <section
 
-      "09:00",
+    id="mypage"
 
-      "10:00",
+    class="hidden"
 
-      "11:00",
+  >
 
-      "12:00",
+    <div class="card">
 
-      "13:00",
+      <h2>マイページ</h2>
 
-      "14:00",
+      <p class="small">
 
-      "15:00",
+        予約履歴を確認できます。
 
-      "16:00",
+      </p>
 
-      "17:00",
+      <div id="history"></div>
 
-      "18:00",
+    </div>
 
-      "19:00",
+  </section>
 
-      "20:00"
+</main>
 
-    ];
+<footer>
 
-    function showPage(page) {
+  © 136 STUDIO
+
+</footer>
+
+<script>
+
+let selectedRoom = "";
+
+let selectedSlot = "";
+
+const times = [
+
+  "09:00",
+
+  "10:00",
+
+  "11:00",
+
+  "12:00",
+
+  "13:00",
+
+  "14:00",
+
+  "15:00",
+
+  "16:00",
+
+  "17:00",
+
+  "18:00",
+
+  "19:00",
+
+  "20:00"
+
+];
+
+function showPage(page) {
+
+  document
+
+    .getElementById("home")
+
+    .classList.add("hidden");
+
+  document
+
+    .getElementById("mypage")
+
+    .classList.add("hidden");
+
+  document
+
+    .getElementById(page)
+
+    .classList.remove("hidden");
+
+  if (page === "mypage") {
+
+    renderHistory();
+
+  }
+
+  window.scrollTo({
+
+    top: 0,
+
+    behavior: "smooth"
+
+  });
+
+}
+
+function pickRoom(room) {
+
+  selectedRoom = room;
+
+  document
+
+    .getElementById("roomA")
+
+    .classList.remove("selected");
+
+  document
+
+    .getElementById("roomB")
+
+    .classList.remove("selected");
+
+  document
+
+    .getElementById("room" + room)
+
+    .classList.add("selected");
+
+}
+
+function renderSlots() {
+
+  const container =
+
+    document.getElementById("slots");
+
+  container.innerHTML = "";
+
+  selectedSlot = "";
+
+  times.forEach(function(time) {
+
+    const button =
+
+      document.createElement("button");
+
+    button.className = "slot";
+
+    button.textContent = time;
+
+    button.onclick = function() {
 
       document
 
-        .getElementById("home")
-
-        .classList.add("hidden");
-
-      document
-
-        .getElementById("mypage")
-
-        .classList.add("hidden");
-
-      document
-
-        .getElementById(page)
-
-        .classList.remove("hidden");
-
-      if (page === "mypage") {
-
-        renderHistory();
-
-      }
-
-      window.scrollTo({
-
-        top: 0,
-
-        behavior: "smooth"
-
-      });
-
-    }
-
-    function pickRoom(room) {
-
-      selectedRoom = room;
-
-      document
-
-        .getElementById("roomA")
-
-        .classList.remove("selected");
-
-      document
-
-        .getElementById("roomB")
-
-        .classList.remove("selected");
-
-      document
-
-        .getElementById("room" + room)
-
-        .classList.add("selected");
-
-    }
-
-    function renderSlots() {
-
-      const container =
-
-        document.getElementById("slots");
-
-      container.innerHTML = "";
-
-      selectedSlot = "";
-
-      times.forEach(function(time) {
-
-        const button =
-
-          document.createElement("button");
-
-        button.className = "slot";
-
-        button.textContent = time;
-
-        button.onclick = function() {
-
-          document
-
-            .querySelectorAll(".slot")
-
-            .forEach(function(item) {
-
-              item.classList.remove("selected");
-
-            });
-
-          button.classList.add("selected");
-
-          selectedSlot = time;
-
-        };
-
-        container.appendChild(button);
-
-      });
-
-    }
-
-    function reserve() {
-
-      const date =
-
-        document.getElementById("date").value;
-
-      if (!date) {
-
-        alert("日付を選択してください。");
-
-        return;
-
-      }
-
-      if (!selectedRoom) {
-
-        alert("スタジオを選択してください。");
-
-        return;
-
-      }
-
-      if (!selectedSlot) {
-
-        alert("時間を選択してください。");
-
-        return;
-
-      }
-
-      const roomName =
-
-        selectedRoom === "A"
-
-          ? "136スタジオ"
-
-          : "136パーソナル";
-
-      const message =
-
-        "予約内容\n\n" +
-
-        "日付：" + date + "\n" +
-
-        "スタジオ：" + roomName + "\n" +
-
-        "時間：" + selectedSlot + "\n" +
-
-        "料金：1,200円\n\n" +
-
-        "この内容で予約しますか？";
-
-      if (!confirm(message)) {
-
-        return;
-
-      }
-
-      const reservations =
-
-        JSON.parse(
-
-          localStorage.getItem(
-
-            "136_reservations"
-
-          ) || "[]"
-
-        );
-
-      reservations.push({
-
-        date: date,
-
-        room: roomName,
-
-        time: selectedSlot,
-
-        price: 1200,
-
-        status: "PayPay決済待ち"
-
-      });
-
-      localStorage.setItem(
-
-        "136_reservations",
-
-        JSON.stringify(reservations)
-
-      );
-
-      alert(
-
-        "予約を受け付けました。\nPayPay決済を完了してください。"
-
-      );
-
-      showPage("mypage");
-
-    }
-
-    function renderHistory() {
-
-      const history =
-
-        document.getElementById("history");
-
-      const reservations =
-
-        JSON.parse(
-
-          localStorage.getItem(
-
-            "136_reservations"
-
-          ) || "[]"
-
-        );
-
-      if (reservations.length === 0) {
-
-        history.innerHTML =
-
-          '<p class="small">' +
-
-          '現在、予約はありません。' +
-
-          '</p>';
-
-        return;
-
-      }
-
-      history.innerHTML = "";
-
-      reservations
-
-        .slice()
-
-        .reverse()
+        .querySelectorAll(".slot")
 
         .forEach(function(item) {
 
-          const div =
-
-            document.createElement("div");
-
-          div.className =
-
-            "history-item";
-
-          div.innerHTML =
-
-            "<b>" +
-
-            item.date +
-
-            "　" +
-
-            item.time +
-
-            "</b><br>" +
-
-            item.room +
-
-            "<br>" +
-
-            "料金：¥" +
-
-            item.price.toLocaleString() +
-
-            '<br><span class="status">' +
-
-            item.status +
-
-            "</span>";
-
-          history.appendChild(div);
+          item.classList.remove("selected");
 
         });
 
-    }
+      button.classList.add("selected");
 
-    function init() {
+      selectedSlot = time;
 
-      const dateInput =
+    };
 
-        document.getElementById("date");
+    container.appendChild(button);
 
-      const today =
+  });
 
-        new Date();
+}
 
-      const yyyy =
+function reserve() {
 
-        today.getFullYear();
+  const date =
 
-      const mm =
+    document.getElementById("date").value;
 
-        String(
+  if (!date) {
 
-          today.getMonth() + 1
+    alert("日付を選択してください。");
 
-        ).padStart(2, "0");
+    return;
 
-      const dd =
+  }
 
-        String(
+  if (!selectedRoom) {
 
-          today.getDate()
+    alert("スタジオを選択してください。");
 
-        ).padStart(2, "0");
+    return;
 
-      const todayString =
+  }
 
-        yyyy + "-" + mm + "-" + dd;
+  if (!selectedSlot) {
 
-      dateInput.min =
+    alert("時間を選択してください。");
 
-        todayString;
+    return;
 
-      dateInput.value =
+  }
 
-        todayString;
+  const roomName =
 
-      pickRoom("A");
+    selectedRoom === "A"
 
-      renderSlots();
+      ? "136スタジオ"
 
-    }
+      : "136パーソナル";
 
-    init();
+  const message =
 
-  </script>
+    "予約内容\n\n" +
+
+    "日付：" + date + "\n" +
+
+    "スタジオ：" + roomName + "\n" +
+
+    "時間：" + selectedSlot + "\n" +
+
+    "料金：1,200円\n\n" +
+
+    "この内容で予約しますか？";
+
+  if (!confirm(message)) {
+
+    return;
+
+  }
+
+  const reservations =
+
+    JSON.parse(
+
+      localStorage.getItem(
+
+        "136_reservations"
+
+      ) || "[]"
+
+    );
+
+  reservations.push({
+
+    date: date,
+
+    room: roomName,
+
+    time: selectedSlot,
+
+    price: 1200,
+
+    status: "PayPay決済待ち"
+
+  });
+
+  localStorage.setItem(
+
+    "136_reservations",
+
+    JSON.stringify(reservations)
+
+  );
+
+  alert(
+
+    "予約を受け付けました。\nPayPay決済を完了してください。"
+
+  );
+
+  showPage("mypage");
+
+}
+
+function renderHistory() {
+
+  const history =
+
+    document.getElementById("history");
+
+  const reservations =
+
+    JSON.parse(
+
+      localStorage.getItem(
+
+        "136_reservations"
+
+      ) || "[]"
+
+    );
+
+  if (reservations.length === 0) {
+
+    history.innerHTML =
+
+      '<p class="small">' +
+
+      '現在、予約はありません。' +
+
+      '</p>';
+
+    return;
+
+  }
+
+  history.innerHTML = "";
+
+  reservations
+
+    .slice()
+
+    .reverse()
+
+    .forEach(function(item) {
+
+      const div =
+
+        document.createElement("div");
+
+      div.className =
+
+        "history-item";
+
+      div.innerHTML =
+
+        "<b>" +
+
+        item.date +
+
+        "　" +
+
+        item.time +
+
+        "</b><br>" +
+
+        item.room +
+
+        "<br>" +
+
+        "料金：¥" +
+
+        item.price.toLocaleString() +
+
+        '<br><span class="status">' +
+
+        item.status +
+
+        "</span>";
+
+      history.appendChild(div);
+
+    });
+
+}
+
+function init() {
+
+  const dateInput =
+
+    document.getElementById("date");
+
+  const today =
+
+    new Date();
+
+  const yyyy =
+
+    today.getFullYear();
+
+  const mm =
+
+    String(
+
+      today.getMonth() + 1
+
+    ).padStart(2, "0");
+
+  const dd =
+
+    String(
+
+      today.getDate()
+
+    ).padStart(2, "0");
+
+  const todayString =
+
+    yyyy + "-" + mm + "-" + dd;
+
+  dateInput.min =
+
+    todayString;
+
+  dateInput.value =
+
+    todayString;
+
+  pickRoom("A");
+
+  renderSlots();
+
+}
+
+init();
+
+</script>
 
 </body>
 
-</html
+</html>
