@@ -1,0 +1,1199 @@
+<!DOCTYPE html>
+
+<html lang="ja">
+
+<head>
+
+  <meta charset="UTF-8">
+
+  <meta
+
+    name="viewport"
+
+    content="width=device-width, initial-scale=1.0"
+
+  >
+
+  <title>136 STUDIO</title>
+
+  <style>
+
+    * {
+
+      box-sizing: border-box;
+
+    }
+
+    body {
+
+      margin: 0;
+
+      font-family:
+
+        -apple-system,
+
+        BlinkMacSystemFont,
+
+        "Hiragino Kaku Gothic ProN",
+
+        "Yu Gothic",
+
+        sans-serif;
+
+      background: #f6f6f3;
+
+      color: #222;
+
+    }
+
+    header {
+
+      position: sticky;
+
+      top: 0;
+
+      z-index: 100;
+
+      display: flex;
+
+      align-items: center;
+
+      justify-content: space-between;
+
+      padding: 16px 20px;
+
+      background: rgba(255, 255, 255, 0.95);
+
+      border-bottom: 1px solid #e5e5e5;
+
+    }
+
+    .logo {
+
+      font-size: 24px;
+
+      font-weight: 800;
+
+      letter-spacing: 1px;
+
+    }
+
+    .logo span {
+
+      font-weight: 400;
+
+      margin-left: 5px;
+
+      font-size: 15px;
+
+    }
+
+    nav {
+
+      display: flex;
+
+      gap: 8px;
+
+    }
+
+    nav button {
+
+      border: none;
+
+      background: #222;
+
+      color: white;
+
+      padding: 10px 14px;
+
+      border-radius: 20px;
+
+      font-weight: bold;
+
+      cursor: pointer;
+
+    }
+
+    .hero {
+
+      min-height: 430px;
+
+      display: flex;
+
+      align-items: center;
+
+      justify-content: center;
+
+      text-align: center;
+
+      padding: 60px 20px;
+
+      background:
+
+        linear-gradient(
+
+          135deg,
+
+          #d9e7df,
+
+          #faf5eb
+
+        );
+
+    }
+
+    .hero-content {
+
+      max-width: 750px;
+
+    }
+
+    .hero .brand {
+
+      font-size: 24px;
+
+      font-weight: 800;
+
+      letter-spacing: 3px;
+
+      margin-bottom: 16px;
+
+    }
+
+    .hero .brand span {
+
+      font-size: 14px;
+
+      margin-left: 7px;
+
+      font-weight: 400;
+
+    }
+
+    .hero h1 {
+
+      font-size: clamp(38px, 8vw, 70px);
+
+      line-height: 1.2;
+
+      margin: 0 0 25px;
+
+    }
+
+    .hero p {
+
+      font-size: 16px;
+
+      line-height: 2;
+
+      color: #444;
+
+    }
+
+    .info {
+
+      display: grid;
+
+      grid-template-columns: repeat(4, 1fr);
+
+      background: white;
+
+      border-bottom: 1px solid #ddd;
+
+    }
+
+    .info div {
+
+      text-align: center;
+
+      padding: 22px 10px;
+
+      border-right: 1px solid #eee;
+
+    }
+
+    .info div:last-child {
+
+      border-right: none;
+
+    }
+
+    .info b {
+
+      display: block;
+
+      font-size: 15px;
+
+      margin-bottom: 6px;
+
+    }
+
+    .info span {
+
+      color: #777;
+
+      font-size: 13px;
+
+    }
+
+    .wrap {
+
+      width: min(920px, calc(100% - 30px));
+
+      margin: 35px auto 80px;
+
+    }
+
+    .card {
+
+      background: white;
+
+      padding: 25px;
+
+      border-radius: 18px;
+
+      box-shadow:
+
+        0 8px 30px rgba(0, 0, 0, 0.06);
+
+      margin-bottom: 20px;
+
+    }
+
+    h2 {
+
+      margin-top: 0;
+
+      font-size: 25px;
+
+    }
+
+    h3 {
+
+      margin-top: 28px;
+
+    }
+
+    label {
+
+      display: block;
+
+      margin-top: 20px;
+
+      margin-bottom: 8px;
+
+      font-weight: bold;
+
+    }
+
+    input {
+
+      width: 100%;
+
+      padding: 15px;
+
+      border: 1px solid #ccc;
+
+      border-radius: 10px;
+
+      font-size: 16px;
+
+      background: white;
+
+    }
+
+    .room-grid {
+
+      display: grid;
+
+      grid-template-columns: 1fr 1fr;
+
+      gap: 12px;
+
+    }
+
+    .room {
+
+      padding: 18px;
+
+      text-align: left;
+
+      background: #fafafa;
+
+      border: 2px solid transparent;
+
+      border-radius: 14px;
+
+      cursor: pointer;
+
+    }
+
+    .room.selected {
+
+      border-color: #222;
+
+      background: #eef5f0;
+
+    }
+
+    .room b {
+
+      display: block;
+
+      font-size: 17px;
+
+      margin-bottom: 6px;
+
+    }
+
+    .room p {
+
+      font-size: 13px;
+
+      color: #666;
+
+      margin: 0;
+
+    }
+
+    .slots {
+
+      display: grid;
+
+      grid-template-columns: repeat(3, 1fr);
+
+      gap: 10px;
+
+      margin-top: 10px;
+
+    }
+
+    .slot {
+
+      border: 1px solid #ccc;
+
+      background: white;
+
+      padding: 12px 5px;
+
+      border-radius: 10px;
+
+      cursor: pointer;
+
+      font-size: 14px;
+
+    }
+
+    .slot.selected {
+
+      background: #222;
+
+      color: white;
+
+      border-color: #222;
+
+    }
+
+    .price {
+
+      margin-top: 25px;
+
+      padding: 18px;
+
+      background: #f5f5f5;
+
+      border-radius: 12px;
+
+      display: flex;
+
+      justify-content: space-between;
+
+      align-items: center;
+
+    }
+
+    .price strong {
+
+      font-size: 24px;
+
+    }
+
+    .reserve-btn {
+
+      width: 100%;
+
+      margin-top: 18px;
+
+      padding: 17px;
+
+      border: none;
+
+      border-radius: 12px;
+
+      background: #111;
+
+      color: white;
+
+      font-size: 17px;
+
+      font-weight: bold;
+
+      cursor: pointer;
+
+    }
+
+    .small {
+
+      color: #777;
+
+      font-size: 13px;
+
+      line-height: 1.7;
+
+    }
+
+    .hidden {
+
+      display: none;
+
+    }
+
+    .history-item {
+
+      padding: 17px 0;
+
+      border-bottom: 1px solid #eee;
+
+    }
+
+    .history-item:last-child {
+
+      border-bottom: none;
+
+    }
+
+    .status {
+
+      display: inline-block;
+
+      background: #fff3ca;
+
+      color: #7a5a00;
+
+      padding: 5px 9px;
+
+      border-radius: 20px;
+
+      font-size: 12px;
+
+      font-weight: bold;
+
+      margin-top: 7px;
+
+    }
+
+    footer {
+
+      padding: 40px 20px;
+
+      text-align: center;
+
+      color: #888;
+
+      font-size: 12px;
+
+    }
+
+    @media (max-width: 700px) {
+
+      header {
+
+        padding: 13px 14px;
+
+      }
+
+      .logo {
+
+        font-size: 19px;
+
+      }
+
+      nav button {
+
+        padding: 9px 11px;
+
+        font-size: 12px;
+
+      }
+
+      .hero {
+
+        min-height: 370px;
+
+      }
+
+      .info {
+
+        grid-template-columns: 1fr 1fr;
+
+      }
+
+      .info div {
+
+        border-bottom: 1px solid #eee;
+
+      }
+
+      .room-grid {
+
+        grid-template-columns: 1fr;
+
+      }
+
+      .slots {
+
+        grid-template-columns: repeat(2, 1fr);
+
+      }
+
+      .card {
+
+        padding: 20px;
+
+      }
+
+    }
+
+  </style>
+
+</head>
+
+<body>
+
+  <header>
+
+    <div class="logo">
+
+      136 <span>STUDIO</span>
+
+    </div>
+
+    <nav>
+
+      <button onclick="showPage('home')">
+
+        予約する
+
+      </button>
+
+      <button onclick="showPage('mypage')">
+
+        マイページ
+
+      </button>
+
+    </nav>
+
+  </header>
+
+  <section class="hero">
+
+    <div class="hero-content">
+
+      <div class="brand">
+
+        136 <span>STUDIO</span>
+
+      </div>
+
+      <h1>
+
+        好きな時間に、<br>
+
+        好きなスタイルで。
+
+      </h1>
+
+      <p>
+
+        ダンス・ヨガ・フィットネス・個人練習など、<br>
+
+        さまざまな用途でご利用いただける
+
+        レンタルスタジオです。
+
+      </p>
+
+    </div>
+
+  </section>
+
+  <section class="info">
+
+    <div>
+
+      <b>年中無休</b>
+
+      <span>9:00〜21:30</span>
+
+    </div>
+
+    <div>
+
+      <b>1時間 1,200円</b>
+
+      <span>前後15分サービス</span>
+
+    </div>
+
+    <div>
+
+      <b>PayPayのみ</b>
+
+      <span>オンライン決済</span>
+
+    </div>
+
+    <div>
+
+      <b>会員登録制</b>
+
+      <span>スマホから簡単予約</span>
+
+    </div>
+
+  </section>
+
+  <main class="wrap">
+
+    <section id="home">
+
+      <div class="card">
+
+        <h2>スタジオを予約</h2>
+
+        <p class="small">
+
+          予約時間60分＋前15分・後15分が無料です。
+
+        </p>
+
+        <label for="date">
+
+          日付
+
+        </label>
+
+        <input
+
+          id="date"
+
+          type="date"
+
+          onchange="renderSlots()"
+
+        >
+
+        <h3>スタジオを選択</h3>
+
+        <div class="room-grid">
+
+          <button
+
+            id="roomA"
+
+            class="room"
+
+            onclick="pickRoom('A')"
+
+          >
+
+            <b>136スタジオ</b>
+
+            <p>
+
+              ダンス・ヨガ・フィットネス・個人練習など
+
+            </p>
+
+          </button>
+
+          <button
+
+            id="roomB"
+
+            class="room"
+
+            onclick="pickRoom('B')"
+
+          >
+
+            <b>136パーソナル</b>
+
+            <p>
+
+              少人数・パーソナルレッスン向け
+
+            </p>
+
+          </button>
+
+        </div>
+
+        <h3>時間を選択</h3>
+
+        <div
+
+          id="slots"
+
+          class="slots"
+
+        ></div>
+
+        <div class="price">
+
+          <div>
+
+            <b>利用料金</b>
+
+            <div class="small">
+
+              1時間
+
+            </div>
+
+          </div>
+
+          <strong>
+
+            ¥1,200
+
+          </strong>
+
+        </div>
+
+        <button
+
+          class="reserve-btn"
+
+          onclick="reserve()"
+
+        >
+
+          予約内容を確認する
+
+        </button>
+
+      </div>
+
+    </section>
+
+    <section
+
+      id="mypage"
+
+      class="hidden"
+
+    >
+
+      <div class="card">
+
+        <h2>マイページ</h2>
+
+        <p class="small">
+
+          予約履歴を確認できます。
+
+        </p>
+
+        <div id="history"></div>
+
+      </div>
+
+    </section>
+
+  </main>
+
+  <footer>
+
+    © 136 STUDIO
+
+  </footer>
+
+  <script>
+
+    let selectedRoom = "";
+
+    let selectedSlot = "";
+
+    const times = [
+
+      "09:00",
+
+      "10:00",
+
+      "11:00",
+
+      "12:00",
+
+      "13:00",
+
+      "14:00",
+
+      "15:00",
+
+      "16:00",
+
+      "17:00",
+
+      "18:00",
+
+      "19:00",
+
+      "20:00"
+
+    ];
+
+    function showPage(page) {
+
+      document
+
+        .getElementById("home")
+
+        .classList.add("hidden");
+
+      document
+
+        .getElementById("mypage")
+
+        .classList.add("hidden");
+
+      document
+
+        .getElementById(page)
+
+        .classList.remove("hidden");
+
+      if (page === "mypage") {
+
+        renderHistory();
+
+      }
+
+      window.scrollTo({
+
+        top: 0,
+
+        behavior: "smooth"
+
+      });
+
+    }
+
+    function pickRoom(room) {
+
+      selectedRoom = room;
+
+      document
+
+        .getElementById("roomA")
+
+        .classList.remove("selected");
+
+      document
+
+        .getElementById("roomB")
+
+        .classList.remove("selected");
+
+      document
+
+        .getElementById("room" + room)
+
+        .classList.add("selected");
+
+    }
+
+    function renderSlots() {
+
+      const container =
+
+        document.getElementById("slots");
+
+      container.innerHTML = "";
+
+      selectedSlot = "";
+
+      times.forEach(function(time) {
+
+        const button =
+
+          document.createElement("button");
+
+        button.className = "slot";
+
+        button.textContent = time;
+
+        button.onclick = function() {
+
+          document
+
+            .querySelectorAll(".slot")
+
+            .forEach(function(item) {
+
+              item.classList.remove("selected");
+
+            });
+
+          button.classList.add("selected");
+
+          selectedSlot = time;
+
+        };
+
+        container.appendChild(button);
+
+      });
+
+    }
+
+    function reserve() {
+
+      const date =
+
+        document.getElementById("date").value;
+
+      if (!date) {
+
+        alert("日付を選択してください。");
+
+        return;
+
+      }
+
+      if (!selectedRoom) {
+
+        alert("スタジオを選択してください。");
+
+        return;
+
+      }
+
+      if (!selectedSlot) {
+
+        alert("時間を選択してください。");
+
+        return;
+
+      }
+
+      const roomName =
+
+        selectedRoom === "A"
+
+          ? "136スタジオ"
+
+          : "136パーソナル";
+
+      const message =
+
+        "予約内容\n\n" +
+
+        "日付：" + date + "\n" +
+
+        "スタジオ：" + roomName + "\n" +
+
+        "時間：" + selectedSlot + "\n" +
+
+        "料金：1,200円\n\n" +
+
+        "この内容で予約しますか？";
+
+      if (!confirm(message)) {
+
+        return;
+
+      }
+
+      const reservations =
+
+        JSON.parse(
+
+          localStorage.getItem(
+
+            "136_reservations"
+
+          ) || "[]"
+
+        );
+
+      reservations.push({
+
+        date: date,
+
+        room: roomName,
+
+        time: selectedSlot,
+
+        price: 1200,
+
+        status: "PayPay決済待ち"
+
+      });
+
+      localStorage.setItem(
+
+        "136_reservations",
+
+        JSON.stringify(reservations)
+
+      );
+
+      alert(
+
+        "予約を受け付けました。\nPayPay決済を完了してください。"
+
+      );
+
+      showPage("mypage");
+
+    }
+
+    function renderHistory() {
+
+      const history =
+
+        document.getElementById("history");
+
+      const reservations =
+
+        JSON.parse(
+
+          localStorage.getItem(
+
+            "136_reservations"
+
+          ) || "[]"
+
+        );
+
+      if (reservations.length === 0) {
+
+        history.innerHTML =
+
+          '<p class="small">' +
+
+          '現在、予約はありません。' +
+
+          '</p>';
+
+        return;
+
+      }
+
+      history.innerHTML = "";
+
+      reservations
+
+        .slice()
+
+        .reverse()
+
+        .forEach(function(item) {
+
+          const div =
+
+            document.createElement("div");
+
+          div.className =
+
+            "history-item";
+
+          div.innerHTML =
+
+            "<b>" +
+
+            item.date +
+
+            "　" +
+
+            item.time +
+
+            "</b><br>" +
+
+            item.room +
+
+            "<br>" +
+
+            "料金：¥" +
+
+            item.price.toLocaleString() +
+
+            '<br><span class="status">' +
+
+            item.status +
+
+            "</span>";
+
+          history.appendChild(div);
+
+        });
+
+    }
+
+    function init() {
+
+      const dateInput =
+
+        document.getElementById("date");
+
+      const today =
+
+        new Date();
+
+      const yyyy =
+
+        today.getFullYear();
+
+      const mm =
+
+        String(
+
+          today.getMonth() + 1
+
+        ).padStart(2, "0");
+
+      const dd =
+
+        String(
+
+          today.getDate()
+
+        ).padStart(2, "0");
+
+      const todayString =
+
+        yyyy + "-" + mm + "-" + dd;
+
+      dateInput.min =
+
+        todayString;
+
+      dateInput.value =
+
+        todayString;
+
+      pickRoom("A");
+
+      renderSlots();
+
+    }
+
+    init();
+
+  </script>
+
+</body>
+
+</html
