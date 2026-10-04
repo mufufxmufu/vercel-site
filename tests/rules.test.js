@@ -1,0 +1,35 @@
+const test=require('node:test');const assert=require('node:assert/strict');
+const {validateBooking,conflicts}=require('../lib/rules');
+const auth=require('../lib/auth');
+const now=Date.parse('2026-10-04T15:00:00+09:00');
+const valid={date:'2026-10-05',room:'A',start:'09:15',termsAccepted:true};
+test('booking includes a full hour and validates opening/closing buffers',()=>{
+ assert.equal(validateBooking(valid,now).end,'10:15');
+ assert.equal(validateBooking({...valid,start:'20:15'},now).end,'21:15');
+ for(const start of ['09:00','08:15','21:15','10:45','bad'])assert.ok(validateBooking({...valid,start},now).error);
+});
+test('reject invalid calendar dates, past preparation, missing consent and too-far date',()=>{
+ for(const body of [{...valid,date:'2026-02-30'},{...valid,date:'2026-10-04',start:'15:15'},{...valid,termsAccepted:false},{...valid,date:'2027-01-01'},{...valid,room:'C'}])assert.ok(validateBooking(body,now).error);
+});
+test('buffers block adjacent hours and permit the next non-overlapping interval',()=>{
+ const existing={start:'09:15',end:'10:15'};
+ assert.equal(conflicts(existing,{start:'10:15',end:'11:15'}),true);
+ assert.equal(conflicts(existing,{start:'10:45',end:'11:45'}),false);
+ assert.equal(conflicts(existing,{start:'09:15',end:'10:15'}),true);
+});
+test('signed sessions accept valid cookie and reject tampering',()=>{
+ process.env.AUTH_SECRET='a'.repeat(64);let cookie;
+ auth.setSession({setHeader:(key,value)=>{cookie=value}},'123');
+ assert.equal(auth.userId({headers:{cookie}}),'123');
+ assert.equal(auth.userId({headers:{cookie:cookie.replace('studio136_session=','studio136_session=x')}}),null);
+ assert.ok(cookie.includes('HttpOnly'));assert.ok(cookie.includes('Secure'));
+});
+test('passwords are salted and verify without exposing plaintext',()=>{
+ const first=auth.hashPassword('password123'),second=auth.hashPassword('password123');
+ assert.notEqual(first,second);assert.ok(auth.checkPassword('password123',first));assert.equal(auth.checkPassword('wrong',first),false);
+});
+test('booking API refuses anonymous and cross-site writes before database access',async()=>{
+ const handler=require('../api/bookings');const response=()=>({headers:{},setHeader(k,v){this.headers[k]=v;},status(s){this.code=s;return this;},json(v){this.body=v;return this;}});
+ let res=response();await handler({method:'POST',headers:{'content-type':'application/json',host:'studio.test'},body:valid},res);assert.equal(res.statusCode,401);assert.equal(res.body.error,'ログインが必要です');
+ res=response();await handler({method:'POST',headers:{'content-type':'application/json',host:'studio.test',origin:'https://other.test'},body:valid},res);assert.equal(res.code,403);
+});
