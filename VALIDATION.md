@@ -35,3 +35,7 @@
 - ログイン後の予約操作をブラウザーで手動確認する検証は未実施。登録・ログイン・予約・履歴・ログアウトはHTTP APIで確認しました。
 
 PayPay入金そのものの照合は自動化していません。予約はpending_paymentで保存され、運営者の入金確認が必要です。
+
+## Four-digit PIN verification (2026-10-04)
+
+17 isolated preview HTTP checks passed: invalid PIN rejection, leading-zero registration and login, authenticated PIN change, old PIN rejection, new PIN login, and persistent five-attempt / 15-minute limit. Existing password hashes remain unchanged until an authenticated member changes their own PIN.
