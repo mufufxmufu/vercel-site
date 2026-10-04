@@ -19,3 +19,5 @@ CREATE TABLE IF NOT EXISTS bookings (
 );
 CREATE INDEX IF NOT EXISTS studio136_booking_lookup ON bookings(room,booking_date);
 CREATE UNIQUE INDEX IF NOT EXISTS studio136_booking_active_unique ON bookings(room,booking_date,start_time) WHERE status IN ('pending_payment','confirmed','paid');
+
+CREATE TABLE IF NOT EXISTS studio136_login_attempts (account_key TEXT PRIMARY KEY,attempt_count INTEGER NOT NULL DEFAULT 0,window_started_at TIMESTAMPTZ NOT NULL DEFAULT now());
