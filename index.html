@@ -8,7 +8,7 @@
 
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-  <meta name="referrer" content="no-referrer">
+  <meta name="theme-color" content="#111111">
 
   <title>136 STUDIO</title>
 
@@ -26,263 +26,175 @@
 
       font-family:
 
-        -apple-system,
-
-        BlinkMacSystemFont,
+        -apple-system, BlinkMacSystemFont,
 
         "Hiragino Kaku Gothic ProN",
 
-        "Yu Gothic",
+        "Yu Gothic", Meiryo, sans-serif;
 
-        sans-serif;
+      background: #f5f5f5;
 
-      background: #f6f6f3;
-
-      color: #222;
+      color: #111;
 
     }
 
     header {
 
-      position: sticky;
+      background: #111;
 
-      top: 0;
+      color: #fff;
 
-      z-index: 100;
-
-      display: flex;
-
-      align-items: center;
-
-      justify-content: space-between;
-
-      padding: 16px 20px;
-
-      background: rgba(255,255,255,.96);
-
-      border-bottom: 1px solid #e5e5e5;
-
-      backdrop-filter: blur(10px);
-
-    }
-
-    .logo {
-
-      font-size: 24px;
-
-      font-weight: 800;
-
-      letter-spacing: 1px;
-
-    }
-
-    .logo span {
-
-      font-weight: 400;
-
-      margin-left: 5px;
-
-      font-size: 15px;
-
-    }
-
-    nav {
-
-      display: flex;
-
-      gap: 8px;
-
-    }
-
-    nav button {
-
-      border: none;
-
-      background: #222;
-
-      color: white;
-
-      padding: 10px 14px;
-
-      border-radius: 20px;
-
-      font-weight: bold;
-
-      cursor: pointer;
-
-    }
-
-    .hero {
-
-      min-height: 500px;
-
-      position: relative;
-
-      overflow: hidden;
-
-      display: flex;
-
-      align-items: center;
-
-      justify-content: center;
+      padding: 24px 16px;
 
       text-align: center;
 
-      padding: 60px 20px;
+    }
 
-      background:
+    header h1 {
 
-        linear-gradient(
+      margin: 0;
 
-          rgba(0,0,0,.40),
+      font-size: 28px;
 
-          rgba(0,0,0,.48)
-
-        ),
-
-        url("https://images.unsplash.com/photo-1508700115892-45ecd05ae2ad?auto=format&fit=crop&w=1800&q=85")
-
-        center / cover no-repeat;
-
-      color: white;
+      letter-spacing: 2px;
 
     }
 
-    .hero-content {
+    header p {
 
-      max-width: 760px;
+      margin: 8px 0 0;
 
-      position: relative;
-
-      z-index: 2;
-
-    }
-
-    .hero .brand {
-
-      font-size: 24px;
-
-      font-weight: 800;
-
-      letter-spacing: 3px;
-
-      margin-bottom: 16px;
-
-    }
-
-    .hero .brand span {
+      color: #ccc;
 
       font-size: 14px;
 
-      margin-left: 7px;
-
-      font-weight: 400;
-
     }
 
-    .hero h1 {
+    main {
 
-      font-size: clamp(38px, 8vw, 70px);
+      max-width: 900px;
 
-      line-height: 1.2;
+      margin: 0 auto;
 
-      margin: 0 0 25px;
-
-      text-shadow: 0 3px 20px rgba(0,0,0,.3);
-
-    }
-
-    .hero p {
-
-      font-size: 16px;
-
-      line-height: 2;
-
-      color: rgba(255,255,255,.94);
-
-      text-shadow: 0 2px 10px rgba(0,0,0,.35);
-
-    }
-
-    .info {
-
-      display: grid;
-
-      grid-template-columns: repeat(4, 1fr);
-
-      background: white;
-
-      border-bottom: 1px solid #ddd;
-
-    }
-
-    .info div {
-
-      text-align: center;
-
-      padding: 22px 10px;
-
-      border-right: 1px solid #eee;
-
-    }
-
-    .info div:last-child {
-
-      border-right: none;
-
-    }
-
-    .info b {
-
-      display: block;
-
-      font-size: 15px;
-
-      margin-bottom: 6px;
-
-    }
-
-    .info span {
-
-      color: #777;
-
-      font-size: 13px;
-
-    }
-
-    .wrap {
-
-      width: min(920px, calc(100% - 30px));
-
-      margin: 35px auto 80px;
+      padding: 18px 14px 50px;
 
     }
 
     .card {
 
-      background: white;
+      background: #fff;
 
-      padding: 25px;
+      border-radius: 16px;
 
-      border-radius: 18px;
+      padding: 20px;
 
-      box-shadow: 0 8px 30px rgba(0,0,0,.06);
+      margin-bottom: 18px;
 
-      margin-bottom: 20px;
+      box-shadow: 0 3px 14px rgba(0,0,0,.07);
 
     }
 
     h2 {
 
-      margin-top: 0;
+      margin: 0 0 16px;
 
-      font-size: 25px;
+      font-size: 21px;
 
     }
 
     h3 {
 
-      margin-top: 28px;
+      margin-top: 0;
+
+    }
+
+    .notice {
+
+      background: #fff8df;
+
+      border: 1px solid #f0d985;
+
+      border-radius: 12px;
+
+      padding: 14px;
+
+      line-height: 1.7;
+
+      margin-bottom: 18px;
+
+    }
+
+    .notice strong {
+
+      display: block;
+
+      margin-bottom: 4px;
+
+    }
+
+    .week-grid {
+
+      display: grid;
+
+      grid-template-columns: repeat(7, minmax(120px, 1fr));
+
+      gap: 10px;
+
+      overflow-x: auto;
+
+      padding-bottom: 5px;
+
+    }
+
+    .day-card {
+
+      min-width: 120px;
+
+      border: 1px solid #ddd;
+
+      border-radius: 12px;
+
+      padding: 12px;
+
+      background: #fafafa;
+
+    }
+
+    .day-title {
+
+      font-weight: bold;
+
+      margin-bottom: 10px;
+
+      text-align: center;
+
+    }
+
+    .booking-item {
+
+      background: #ffe7e7;
+
+      border-radius: 8px;
+
+      padding: 7px 6px;
+
+      margin: 5px 0;
+
+      font-size: 12px;
+
+      text-align: center;
+
+    }
+
+    .empty {
+
+      color: #999;
+
+      font-size: 12px;
+
+      text-align: center;
+
+      padding: 8px 0;
 
     }
 
@@ -290,193 +202,43 @@
 
       display: block;
 
-      margin-top: 20px;
+      font-weight: 700;
 
-      margin-bottom: 8px;
-
-      font-weight: bold;
+      margin: 15px 0 6px;
 
     }
 
-    input {
+    input,
+
+    select {
 
       width: 100%;
-
-      padding: 15px;
 
       border: 1px solid #ccc;
 
       border-radius: 10px;
+
+      padding: 13px;
 
       font-size: 16px;
 
-      background: white;
+      background: #fff;
 
     }
 
-    .room-grid {
-
-      display: grid;
-
-      grid-template-columns: 1fr 1fr;
-
-      gap: 14px;
-
-    }
-
-    .room {
-
-      padding: 10px;
-
-      text-align: left;
-
-      background: #fafafa;
-
-      border: 2px solid transparent;
-
-      border-radius: 16px;
-
-      cursor: pointer;
-
-      overflow: hidden;
-
-      transition: .2s;
-
-    }
-
-    .room:hover {
-
-      transform: translateY(-2px);
-
-    }
-
-    .room.selected {
-
-      border-color: #222;
-
-      background: #eef5f0;
-
-    }
-
-    .room-image {
+    button {
 
       width: 100%;
-
-      height: 190px;
-
-      object-fit: cover;
-
-      display: block;
-
-      border-radius: 11px;
-
-      margin-bottom: 14px;
-
-      background: #e7e7e3;
-
-    }
-
-    .room b {
-
-      display: block;
-
-      font-size: 17px;
-
-      margin: 0 8px 6px;
-
-    }
-
-    .room p {
-
-      font-size: 13px;
-
-      color: #666;
-
-      margin: 0 8px 10px;
-
-      line-height: 1.6;
-
-    }
-
-    .slots {
-
-      display: grid;
-
-      grid-template-columns: repeat(3, 1fr);
-
-      gap: 10px;
-
-      margin-top: 10px;
-
-    }
-
-    .slot {
-
-      border: 1px solid #ccc;
-
-      background: white;
-
-      padding: 12px 5px;
-
-      border-radius: 10px;
-
-      cursor: pointer;
-
-      font-size: 14px;
-
-    }
-
-    .slot.selected {
-
-      background: #222;
-
-      color: white;
-
-      border-color: #222;
-
-    }
-
-    .price {
-
-      margin-top: 25px;
-
-      padding: 18px;
-
-      background: #f5f5f5;
-
-      border-radius: 12px;
-
-      display: flex;
-
-      justify-content: space-between;
-
-      align-items: center;
-
-    }
-
-    .price strong {
-
-      font-size: 24px;
-
-    }
-
-    .reserve-btn {
-
-      width: 100%;
-
-      margin-top: 18px;
-
-      padding: 17px;
 
       border: none;
 
       border-radius: 12px;
 
-      background: #111;
+      padding: 15px;
 
-      color: white;
+      margin-top: 18px;
 
-      font-size: 17px;
+      font-size: 16px;
 
       font-weight: bold;
 
@@ -484,9 +246,75 @@
 
     }
 
+    .primary {
+
+      background: #111;
+
+      color: #fff;
+
+    }
+
+    .primary:disabled {
+
+      opacity: .45;
+
+      cursor: not-allowed;
+
+    }
+
+    .paypay {
+
+      background: #ff003c;
+
+      color: white;
+
+    }
+
+    .status {
+
+      display: none;
+
+      margin-top: 15px;
+
+      padding: 13px;
+
+      border-radius: 10px;
+
+      line-height: 1.6;
+
+    }
+
+    .status.ok {
+
+      display: block;
+
+      background: #e7f8ec;
+
+      color: #17672b;
+
+    }
+
+    .status.error {
+
+      display: block;
+
+      background: #ffe8e8;
+
+      color: #a00000;
+
+    }
+
+    .price {
+
+      font-size: 24px;
+
+      font-weight: 800;
+
+    }
+
     .small {
 
-      color: #777;
+      color: #666;
 
       font-size: 13px;
 
@@ -494,49 +322,27 @@
 
     }
 
-    .hidden {
+    .paypay-box {
 
-      display: none;
+      text-align: center;
 
-    }
+      border: 2px solid #eee;
 
-    .history-item {
+      border-radius: 14px;
 
-      padding: 17px 0;
-
-      border-bottom: 1px solid #eee;
+      padding: 18px;
 
     }
 
-    .history-item:last-child {
+    .reserved {
 
-      border-bottom: none;
-
-    }
-
-    .status {
-
-      display: inline-block;
-
-      background: #fff3ca;
-
-      color: #7a5a00;
-
-      padding: 5px 9px;
-
-      border-radius: 20px;
-
-      font-size: 12px;
+      color: #d00;
 
       font-weight: bold;
-
-      margin-top: 7px;
 
     }
 
     footer {
-
-      padding: 40px 20px;
 
       text-align: center;
 
@@ -544,69 +350,21 @@
 
       font-size: 12px;
 
+      padding: 20px;
+
     }
 
-    @media (max-width: 700px) {
-
-      header {
-
-        padding: 13px 14px;
-
-      }
-
-      .logo {
-
-        font-size: 19px;
-
-      }
-
-      nav button {
-
-        padding: 9px 11px;
-
-        font-size: 12px;
-
-      }
-
-      .hero {
-
-        min-height: 430px;
-
-      }
-
-      .info {
-
-        grid-template-columns: 1fr 1fr;
-
-      }
-
-      .info div {
-
-        border-bottom: 1px solid #eee;
-
-      }
-
-      .room-grid {
-
-        grid-template-columns: 1fr;
-
-      }
-
-      .room-image {
-
-        height: 210px;
-
-      }
-
-      .slots {
-
-        grid-template-columns: repeat(2, 1fr);
-
-      }
+    @media (max-width: 600px) {
 
       .card {
 
-        padding: 20px;
+        padding: 16px;
+
+      }
+
+      header h1 {
+
+        font-size: 25px;
 
       }
 
@@ -620,273 +378,169 @@
 
 <header>
 
-  <div class="logo">
+  <h1>136 STUDIO</h1>
 
-    136 <span>STUDIO</span>
-
-  </div>
-
-  <nav>
-
-    <button onclick="showPage('home')">
-
-      予約する
-
-    </button>
-
-    <button onclick="showPage('mypage')">
-
-      マイページ
-
-    </button>
-
-  </nav>
+  <p>スタジオ予約システム</p>
 
 </header>
 
-<section class="hero">
+<main>
 
-  <div class="hero-content">
+  <div class="notice">
 
-    <div class="brand">
+    <strong>予約とお支払いは別です</strong>
 
-      136 <span>STUDIO</span>
+    先にこのサイトでスタジオを予約してください。<br>
 
-    </div>
+    お支払いはご利用時に、現地のPayPay QRコードからお願いいたします。
 
-    <h1>
+  </div>
 
-      好きな時間に、<br>
+  <!-- 7日間予約状況 -->
 
-      好きなスタイルで。
+  <section class="card">
 
-    </h1>
+    <h2>本日から7日間の予約状況</h2>
 
-    <p>
+    <p class="small">
 
-      ダンス・ヨガ・フィットネス・個人練習など、<br>
+      予約済みの時間帯を表示しています。
 
-      さまざまな用途でご利用いただける
-
-      レンタルスタジオです。
+      予約が入ると他のお客様にも反映されます。
 
     </p>
 
-  </div>
+    <div id="weekSchedule" class="week-grid">
 
-</section>
-
-<section class="info">
-
-  <div>
-
-    <b>年中無休</b>
-
-    <span>9:00〜21:30</span>
-
-  </div>
-
-  <div>
-
-    <b>1時間 1,200円</b>
-
-    <span>前後15分サービス</span>
-
-  </div>
-
-  <div>
-
-    <b>PayPayのみ</b>
-
-    <span>オンライン決済</span>
-
-  </div>
-
-  <div>
-
-    <b>会員登録制</b>
-
-    <span>スマホから簡単予約</span>
-
-  </div>
-
-</section>
-
-<main class="wrap">
-
-  <section id="home">
-
-    <div class="card">
-
-      <h2>スタジオを予約</h2>
-
-      <p class="small">
-
-        予約時間60分＋前15分・後15分が無料です。
-
-      </p>
-
-      <label for="date">
-
-        日付
-
-      </label>
-
-      <input
-
-        id="date"
-
-        type="date"
-
-        onchange="renderSlots()"
-
-      >
-
-      <h3>スタジオを選択</h3>
-
-      <div class="room-grid">
-
-        <button
-
-          id="roomA"
-
-          class="room"
-
-          onclick="pickRoom('A')"
-
-        >
-
-          <img
-
-            class="room-image"
-
-            src="https://images.unsplash.com/photo-1524594152303-9fd13543fe6e?auto=format&fit=crop&w=1200&q=85"
-
-            alt="136スタジオ"
-
-            loading="eager"
-
-            decoding="async"
-
-            referrerpolicy="no-referrer"
-
-          >
-
-          <b>136スタジオ</b>
-
-          <p>
-
-            ダンス・ヨガ・フィットネス・個人練習など
-
-          </p>
-
-        </button>
-
-        <button
-
-          id="roomB"
-
-          class="room"
-
-          onclick="pickRoom('B')"
-
-        >
-
-          <img
-
-            class="room-image"
-
-            src="https://images.unsplash.com/photo-1534438327276-14e5300c3a48?auto=format&fit=crop&w=1200&q=85"
-
-            alt="136パーソナル"
-
-            loading="eager"
-
-            decoding="async"
-
-            referrerpolicy="no-referrer"
-
-          >
-
-          <b>136パーソナル</b>
-
-          <p>
-
-            少人数・パーソナルレッスン向け
-
-          </p>
-
-        </button>
-
-      </div>
-
-      <h3>時間を選択</h3>
-
-      <div
-
-        id="slots"
-
-        class="slots"
-
-      ></div>
-
-      <div class="price">
-
-        <div>
-
-          <b>利用料金</b>
-
-          <div class="small">
-
-            1時間
-
-          </div>
-
-        </div>
-
-        <strong>
-
-          ¥1,200
-
-        </strong>
-
-      </div>
-
-      <button
-
-        class="reserve-btn"
-
-        onclick="reserve()"
-
-      >
-
-        予約内容を確認する
-
-      </button>
+      読み込み中...
 
     </div>
 
   </section>
 
-  <section
+  <!-- 予約 -->
 
-    id="mypage"
+  <section class="card">
 
-    class="hidden"
+    <h2>スタジオ予約</h2>
 
-  >
+    <div class="price">
 
-    <div class="card">
+      1時間 1,200円
 
-      <h2>マイページ</h2>
+    </div>
 
-      <p class="small">
+    <p class="small">
 
-        予約履歴を確認できます。
+      ご利用時間：選択時間の45分〜翌時15分
+
+    </p>
+
+    <form id="bookingForm">
+
+      <label for="name">お名前</label>
+
+      <input
+
+        id="name"
+
+        name="name"
+
+        type="text"
+
+        autocomplete="name"
+
+        required
+
+        placeholder="例：山田 太郎"
+
+      >
+
+      <label for="date">利用日</label>
+
+      <input
+
+        id="date"
+
+        name="date"
+
+        type="date"
+
+        required
+
+      >
+
+      <label for="room">スタジオ</label>
+
+      <select id="room" name="room" required>
+
+        <option value="A">スタジオ A</option>
+
+        <option value="B">スタジオ B</option>
+
+      </select>
+
+      <label for="time">時間</label>
+
+      <select id="time" name="time" required>
+
+        <option value="">時間を選択してください</option>
+
+      </select>
+
+      <button
+
+        id="reserveButton"
+
+        type="submit"
+
+        class="primary"
+
+      >
+
+        この内容で予約する
+
+      </button>
+
+    </form>
+
+    <div id="bookingStatus" class="status"></div>
+
+  </section>
+
+  <!-- PayPay -->
+
+  <section class="card">
+
+    <h2>PayPayでのお支払い</h2>
+
+    <div class="paypay-box">
+
+      <h3>お支払いは現地で</h3>
+
+      <p>
+
+        予約後、ご利用当日にスタジオに設置してある
+
+        <strong>PayPay QRコード</strong>
+
+        からお支払いください。
 
       </p>
 
-      <div id="history"></div>
+      <div class="price">
+
+        1,200円
+
+      </div>
+
+      <p class="small">
+
+        このサイトでPayPay決済を完了する必要はありません。<br>
+
+        「予約」と「支払い」は別々に処理されます。
+
+      </p>
 
     </div>
 
@@ -902,375 +556,721 @@
 
 <script>
 
-let selectedRoom = "";
+  const PRICE = 1200;
 
-let selectedSlot = "";
+  const bookingForm =
 
-const times = [
-
-  "09:00",
-
-  "10:00",
-
-  "11:00",
-
-  "12:00",
-
-  "13:00",
-
-  "14:00",
-
-  "15:00",
-
-  "16:00",
-
-  "17:00",
-
-  "18:00",
-
-  "19:00",
-
-  "20:00"
-
-];
-
-function showPage(page) {
-
-  document
-
-    .getElementById("home")
-
-    .classList.add("hidden");
-
-  document
-
-    .getElementById("mypage")
-
-    .classList.add("hidden");
-
-  document
-
-    .getElementById(page)
-
-    .classList.remove("hidden");
-
-  if (page === "mypage") {
-
-    renderHistory();
-
-  }
-
-  window.scrollTo({
-
-    top: 0,
-
-    behavior: "smooth"
-
-  });
-
-}
-
-function pickRoom(room) {
-
-  selectedRoom = room;
-
-  document
-
-    .getElementById("roomA")
-
-    .classList.remove("selected");
-
-  document
-
-    .getElementById("roomB")
-
-    .classList.remove("selected");
-
-  document
-
-    .getElementById("room" + room)
-
-    .classList.add("selected");
-
-}
-
-function renderSlots() {
-
-  const container =
-
-    document.getElementById("slots");
-
-  container.innerHTML = "";
-
-  selectedSlot = "";
-
-  times.forEach(function(time) {
-
-    const button =
-
-      document.createElement("button");
-
-    button.className = "slot";
-
-    button.textContent = time;
-
-    button.onclick = function() {
-
-      document
-
-        .querySelectorAll(".slot")
-
-        .forEach(function(item) {
-
-          item.classList.remove("selected");
-
-        });
-
-      button.classList.add("selected");
-
-      selectedSlot = time;
-
-    };
-
-    container.appendChild(button);
-
-  });
-
-}
-
-function reserve() {
-
-  const date =
-
-    document.getElementById("date").value;
-
-  if (!date) {
-
-    alert("日付を選択してください。");
-
-    return;
-
-  }
-
-  if (!selectedRoom) {
-
-    alert("スタジオを選択してください。");
-
-    return;
-
-  }
-
-  if (!selectedSlot) {
-
-    alert("時間を選択してください。");
-
-    return;
-
-  }
-
-  const roomName =
-
-    selectedRoom === "A"
-
-      ? "136スタジオ"
-
-      : "136パーソナル";
-
-  const message =
-
-    "予約内容\n\n" +
-
-    "日付：" + date + "\n" +
-
-    "スタジオ：" + roomName + "\n" +
-
-    "時間：" + selectedSlot + "\n" +
-
-    "料金：1,200円\n\n" +
-
-    "この内容で予約しますか？";
-
-  if (!confirm(message)) {
-
-    return;
-
-  }
-
-  const reservations =
-
-    JSON.parse(
-
-      localStorage.getItem(
-
-        "136_reservations"
-
-      ) || "[]"
-
-    );
-
-  reservations.push({
-
-    date: date,
-
-    room: roomName,
-
-    time: selectedSlot,
-
-    price: 1200,
-
-    status: "PayPay決済待ち"
-
-  });
-
-  localStorage.setItem(
-
-    "136_reservations",
-
-    JSON.stringify(reservations)
-
-  );
-
-  alert(
-
-    "予約を受け付けました。\nPayPay決済を完了してください。"
-
-  );
-
-  showPage("mypage");
-
-}
-
-function renderHistory() {
-
-  const history =
-
-    document.getElementById("history");
-
-  const reservations =
-
-    JSON.parse(
-
-      localStorage.getItem(
-
-        "136_reservations"
-
-      ) || "[]"
-
-    );
-
-  if (reservations.length === 0) {
-
-    history.innerHTML =
-
-      '<p class="small">' +
-
-      '現在、予約はありません。' +
-
-      '</p>';
-
-    return;
-
-  }
-
-  history.innerHTML = "";
-
-  reservations
-
-    .slice()
-
-    .reverse()
-
-    .forEach(function(item) {
-
-      const div =
-
-        document.createElement("div");
-
-      div.className =
-
-        "history-item";
-
-      div.innerHTML =
-
-        "<b>" +
-
-        item.date +
-
-        "　" +
-
-        item.time +
-
-        "</b><br>" +
-
-        item.room +
-
-        "<br>" +
-
-        "料金：¥" +
-
-        item.price.toLocaleString() +
-
-        '<br><span class="status">' +
-
-        item.status +
-
-        "</span>";
-
-      history.appendChild(div);
-
-    });
-
-}
-
-function init() {
+    document.getElementById("bookingForm");
 
   const dateInput =
 
     document.getElementById("date");
 
-  const today =
+  const roomSelect =
 
-    new Date();
+    document.getElementById("room");
 
-  const yyyy =
+  const timeSelect =
 
-    today.getFullYear();
+    document.getElementById("time");
 
-  const mm =
+  const reserveButton =
 
-    String(
+    document.getElementById("reserveButton");
 
-      today.getMonth() + 1
+  const bookingStatus =
 
-    ).padStart(2, "0");
+    document.getElementById("bookingStatus");
 
-  const dd =
+  const weekSchedule =
 
-    String(
+    document.getElementById("weekSchedule");
 
-      today.getDate()
+  /* =========================
 
-    ).padStart(2, "0");
+     日付関連
 
-  const todayString =
+  ========================= */
 
-    yyyy + "-" + mm + "-" + dd;
+  function localDateString(date) {
+
+    const y = date.getFullYear();
+
+    const m =
+
+      String(date.getMonth() + 1).padStart(2, "0");
+
+    const d =
+
+      String(date.getDate()).padStart(2, "0");
+
+    return `${y}-${m}-${d}`;
+
+  }
+
+  const today = new Date();
 
   dateInput.min =
 
-    todayString;
+    localDateString(today);
+
+  const maxDate =
+
+    new Date(today);
+
+  maxDate.setDate(
+
+    maxDate.getDate() + 60
+
+  );
+
+  dateInput.max =
+
+    localDateString(maxDate);
 
   dateInput.value =
 
-    todayString;
+    localDateString(today);
 
-  pickRoom("A");
+  /* =========================
 
-  renderSlots();
+     時間枠
 
-}
+  ========================= */
 
-init();
+  function buildTimes() {
+
+    timeSelect.innerHTML =
+
+      '<option value="">時間を選択してください</option>';
+
+    for (let hour = 9; hour <= 20; hour++) {
+
+      const start =
+
+        String(hour).padStart(2, "0") + ":00";
+
+      const end =
+
+        String(hour + 1).padStart(2, "0") + ":00";
+
+      const option =
+
+        document.createElement("option");
+
+      option.value = start;
+
+      option.textContent =
+
+        `${start}（${String(hour).padStart(2,"0")}:45〜${String(hour + 1).padStart(2,"0")}:15）`;
+
+      timeSelect.appendChild(option);
+
+    }
+
+  }
+
+  buildTimes();
+
+  /* =========================
+
+     API
+
+  ========================= */
+
+  async function getBookings() {
+
+    try {
+
+      const response =
+
+        await fetch("/api/bookings", {
+
+          method: "GET",
+
+          headers: {
+
+            "Accept": "application/json"
+
+          },
+
+          cache: "no-store"
+
+        });
+
+      if (!response.ok) {
+
+        throw new Error(
+
+          "予約情報を取得できませんでした"
+
+        );
+
+      }
+
+      const data =
+
+        await response.json();
+
+      if (Array.isArray(data)) {
+
+        return data;
+
+      }
+
+      if (Array.isArray(data.bookings)) {
+
+        return data.bookings;
+
+      }
+
+      return [];
+
+    } catch (error) {
+
+      console.error(error);
+
+      return [];
+
+    }
+
+  }
+
+  /* =========================
+
+     7日間の予約表示
+
+  ========================= */
+
+  async function renderWeek() {
+
+    weekSchedule.innerHTML =
+
+      "予約状況を読み込み中...";
+
+    const bookings =
+
+      await getBookings();
+
+    weekSchedule.innerHTML = "";
+
+    const weekdays =
+
+      ["日","月","火","水","木","金","土"];
+
+    for (let i = 0; i < 7; i++) {
+
+      const day =
+
+        new Date();
+
+      day.setHours(0,0,0,0);
+
+      day.setDate(
+
+        day.getDate() + i
+
+      );
+
+      const dateString =
+
+        localDateString(day);
+
+      const card =
+
+        document.createElement("div");
+
+      card.className =
+
+        "day-card";
+
+      const title =
+
+        document.createElement("div");
+
+      title.className =
+
+        "day-title";
+
+      title.textContent =
+
+        `${day.getMonth()+1}/${day.getDate()} (${weekdays[day.getDay()]})`;
+
+      card.appendChild(title);
+
+      const dayBookings =
+
+        bookings
+
+          .filter(b =>
+
+            String(b.date).slice(0,10) ===
+
+            dateString
+
+          )
+
+          .sort((a,b) =>
+
+            String(a.time || a.start_time || "")
+
+              .localeCompare(
+
+                String(b.time || b.start_time || "")
+
+              )
+
+          );
+
+      if (dayBookings.length === 0) {
+
+        const empty =
+
+          document.createElement("div");
+
+        empty.className =
+
+          "empty";
+
+        empty.textContent =
+
+          "予約なし";
+
+        card.appendChild(empty);
+
+      } else {
+
+        dayBookings.forEach(
+
+          booking => {
+
+            const item =
+
+              document.createElement("div");
+
+            item.className =
+
+              "booking-item";
+
+            const room =
+
+              booking.room ||
+
+              booking.studio ||
+
+              "";
+
+            const time =
+
+              booking.time ||
+
+              booking.start_time ||
+
+              "";
+
+            item.textContent =
+
+              `${room ? "Studio " + room + " / " : ""}${String(time).slice(0,5)} 予約済み`;
+
+            card.appendChild(item);
+
+          }
+
+        );
+
+      }
+
+      weekSchedule.appendChild(card);
+
+    }
+
+  }
+
+  /* =========================
+
+     空き時間更新
+
+  ========================= */
+
+  async function refreshAvailableTimes() {
+
+    const selectedDate =
+
+      dateInput.value;
+
+    const selectedRoom =
+
+      roomSelect.value;
+
+    if (!selectedDate) {
+
+      return;
+
+    }
+
+    const bookings =
+
+      await getBookings();
+
+    buildTimes();
+
+    const options =
+
+      Array.from(
+
+        timeSelect.options
+
+      );
+
+    options.forEach(option => {
+
+      if (!option.value) {
+
+        return;
+
+      }
+
+      const alreadyBooked =
+
+        bookings.some(booking => {
+
+          const bookingDate =
+
+            String(
+
+              booking.date || ""
+
+            ).slice(0,10);
+
+          const bookingRoom =
+
+            String(
+
+              booking.room ||
+
+              booking.studio ||
+
+              ""
+
+            ).toUpperCase();
+
+          const bookingTime =
+
+            String(
+
+              booking.time ||
+
+              booking.start_time ||
+
+              ""
+
+            ).slice(0,5);
+
+          return (
+
+            bookingDate === selectedDate &&
+
+            bookingRoom ===
+
+              selectedRoom.toUpperCase() &&
+
+            bookingTime ===
+
+              option.value
+
+          );
+
+        });
+
+      if (alreadyBooked) {
+
+        option.disabled = true;
+
+        option.textContent +=
+
+          "【予約済み】";
+
+      }
+
+    });
+
+  }
+
+  dateInput.addEventListener(
+
+    "change",
+
+    refreshAvailableTimes
+
+  );
+
+  roomSelect.addEventListener(
+
+    "change",
+
+    refreshAvailableTimes
+
+  );
+
+  /* =========================
+
+     予約登録
+
+  ========================= */
+
+  bookingForm.addEventListener(
+
+    "submit",
+
+    async function(event) {
+
+      event.preventDefault();
+
+      bookingStatus.className =
+
+        "status";
+
+      bookingStatus.textContent =
+
+        "";
+
+      const name =
+
+        document
+
+          .getElementById("name")
+
+          .value
+
+          .trim();
+
+      const date =
+
+        dateInput.value;
+
+      const room =
+
+        roomSelect.value;
+
+      const time =
+
+        timeSelect.value;
+
+      if (
+
+        !name ||
+
+        !date ||
+
+        !room ||
+
+        !time
+
+      ) {
+
+        bookingStatus.className =
+
+          "status error";
+
+        bookingStatus.textContent =
+
+          "すべての項目を入力してください。";
+
+        return;
+
+      }
+
+      reserveButton.disabled = true;
+
+      reserveButton.textContent =
+
+        "予約を登録しています...";
+
+      try {
+
+        const response =
+
+          await fetch(
+
+            "/api/bookings",
+
+            {
+
+              method: "POST",
+
+              headers: {
+
+                "Content-Type":
+
+                  "application/json"
+
+              },
+
+              body:
+
+                JSON.stringify({
+
+                  name,
+
+                  date,
+
+                  room,
+
+                  studio: room,
+
+                  time,
+
+                  start_time: time,
+
+                  price: PRICE,
+
+                  payment:
+
+                    "現地PayPay QR",
+
+                  payment_status:
+
+                    "現地支払い",
+
+                  status:
+
+                    "予約済み"
+
+                })
+
+            }
+
+          );
+
+        let result = {};
+
+        try {
+
+          result =
+
+            await response.json();
+
+        } catch (_) {}
+
+        if (!response.ok) {
+
+          if (
+
+            response.status === 409
+
+          ) {
+
+            throw new Error(
+
+              "この時間はすでに予約されています。別の時間を選択してください。"
+
+            );
+
+          }
+
+          throw new Error(
+
+            result.error ||
+
+            result.message ||
+
+            "予約登録に失敗しました。"
+
+          );
+
+        }
+
+        bookingStatus.className =
+
+          "status ok";
+
+        bookingStatus.innerHTML =
+
+          "<strong>予約が完了しました。</strong><br>" +
+
+          date + "<br>" +
+
+          "スタジオ " + room + "<br>" +
+
+          time + "<br>" +
+
+          "料金 1,200円<br><br>" +
+
+          "お支払いはご利用当日に、現地のPayPay QRコードからお願いいたします。";
+
+        timeSelect.value = "";
+
+        await renderWeek();
+
+        await refreshAvailableTimes();
+
+      } catch (error) {
+
+        console.error(error);
+
+        bookingStatus.className =
+
+          "status error";
+
+        bookingStatus.textContent =
+
+          error.message ||
+
+          "予約登録に失敗しました。";
+
+      } finally {
+
+        reserveButton.disabled =
+
+          false;
+
+        reserveButton.textContent =
+
+          "この内容で予約する";
+
+      }
+
+    }
+
+  );
+
+  /* =========================
+
+     初期表示
+
+  ========================= */
+
+  async function initialize() {
+
+    await renderWeek();
+
+    await refreshAvailableTimes();
+
+  }
+
+  initialize();
+
+  /*
+
+    他の利用者が予約した場合にも
+
+    画面を定期的に更新
+
+  */
+
+  setInterval(
+
+    async () => {
+
+      await renderWeek();
+
+      await refreshAvailableTimes();
+
+    },
+
+    30000
+
+  );
 
 </script>
 
