@@ -1,0 +1,2 @@
+const {sql}=require('../lib/db');const {requireUser}=require('../lib/auth');const {fail}=require('../lib/http');
+module.exports=async(req,res)=>{res.setHeader('Cache-Control','no-store');if(req.method!=='GET')return res.status(405).json({error:'GETのみです'});const uid=requireUser(req,res);if(!uid)return;try{const q=sql();const rows=await q`SELECT id,name,email,phone FROM users WHERE id=${uid}`;if(!rows.length)return res.status(401).json({error:'ログインし直してください'});return res.json({user:rows[0]});}catch(e){return fail(res,e,'会員情報を取得できませんでした');}};

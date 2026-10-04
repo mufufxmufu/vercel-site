@@ -1,0 +1,100 @@
+<!doctype html>
+<html lang="ja">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>136 STUDIO｜レンタルスタジオ予約</title>
+<style>
+*{box-sizing:border-box}body{margin:0;font-family:-apple-system,BlinkMacSystemFont,"Noto Sans JP",sans-serif;background:#f7f7f5;color:#171717}
+header{position:sticky;top:0;z-index:10;background:#111;color:#fff;padding:14px 18px;display:flex;justify-content:space-between;align-items:center}
+.logo{width:82px;height:42px;display:flex;align-items:center}.logo img{width:100%;height:100%;object-fit:contain;display:block}
+nav{display:flex;gap:7px}nav button{border:0;border-radius:9px;padding:9px 12px;background:#fff;color:#111;font-weight:700}
+.hero{position:relative;height:470px;overflow:hidden}.hero img{width:100%;height:100%;object-fit:cover}.hero:after{content:"";position:absolute;inset:0;background:linear-gradient(90deg,#000b 0%,#0004 50%,transparent 80%)}
+.heroText{position:absolute;z-index:2;left:7%;top:50%;transform:translateY(-50%);color:#fff}.heroText .brand{font:60px Georgia,serif}.heroText .brand span{display:block;font:13px Arial;letter-spacing:7px;margin:8px 0 25px 5px}.heroText h1{font-size:27px;line-height:1.5;margin:0}.heroText p{font-size:14px;line-height:1.8}
+.info{background:#171717;color:#fff;display:grid;grid-template-columns:repeat(4,1fr);padding:20px 16px;gap:10px}.info div{text-align:center;border-right:1px solid #555}.info div:last-child{border:0}.info b{display:block}.info span{font-size:12px;color:#ccc}
+.wrap{max-width:900px;margin:auto;padding:22px 16px}.card{background:#fff;border-radius:15px;padding:20px;margin-bottom:16px;box-shadow:0 2px 15px #0000000c}
+h2{margin:0 0 12px}.room{display:grid;grid-template-columns:1fr 1fr;gap:10px}.room button{border:1px solid #ddd;background:#fff;border-radius:12px;overflow:hidden;text-align:left;padding:0;cursor:pointer}.room button.sel{outline:3px solid #111}.room img{width:100%;height:180px;object-fit:cover;display:block}.rbody{padding:14px}.room b{font-size:16px}.room p{font-size:12px;color:#666;margin:5px 0 0}
+.primary{width:100%;border:0;border-radius:10px;background:#111;color:#fff;padding:14px;font-weight:700;font-size:15px}
+.slots{display:grid;grid-template-columns:repeat(3,1fr);gap:8px}.slot{border:0;border-radius:10px;padding:11px;background:#eff8f0;font-weight:700}.slot.busy{background:#ddd;color:#999}.slot.sel{outline:3px solid #111}
+input{width:100%;padding:12px;border:1px solid #ddd;border-radius:9px;margin:5px 0 12px;font-size:16px}.small{font-size:13px;color:#666}.ok{padding:12px;background:#effaf2;border-radius:10px}
+.tabs{display:flex;gap:7px;margin-bottom:14px}.tabs button{flex:1;border:0;border-radius:9px;padding:11px;background:#eee;font-weight:700}.tabs .on{background:#111;color:#fff}
+.hidden{display:none}.history{border-top:1px solid #eee;padding:12px 0}
+@media(max-width:650px){.hero{height:520px}.heroText{left:24px;right:24px}.heroText .brand{font-size:48px}.info{grid-template-columns:repeat(2,1fr)}.info div:nth-child(2){border:0}.room{grid-template-columns:1fr}.room img{height:210px}.slots{grid-template-columns:repeat(2,1fr)}nav button{font-size:12px;padding:8px}}
+
+.paypayBox{display:grid;grid-template-columns:220px 1fr;gap:20px;align-items:center;background:#fff7f7;border:1px solid #f0d0d0;border-radius:16px;padding:18px;margin-top:14px}.paypayBox img{width:220px;max-width:100%;display:block;margin:auto}.paypaySteps{font-size:14px;line-height:1.8}.paypaySteps b{font-size:18px}.paypayBtn{display:inline-block;background:#d9002b;color:#fff!important;text-decoration:none;padding:12px 18px;border-radius:10px;font-weight:700;margin-top:10px}@media(max-width:650px){.paypayBox{grid-template-columns:1fr}.paypayBox img{width:260px}}
+.modal{position:fixed;inset:0;background:#0008;z-index:99;overflow:auto;padding:20px}.modalCard{background:white;padding:22px;border-radius:16px;margin:25px auto}.primary:disabled{opacity:.5;cursor:wait}input[type=checkbox]{flex-shrink:0}
+</style>
+</head>
+<body>
+<header><div class="logo"><img src="/assets/logo.png" alt="136 STUDIO ロゴ"></div><nav><button onclick="show('home')">予約する</button><button onclick="show('mypage')">マイページ</button></nav></header>
+
+<section class="hero">
+<img src="136_studio.jpg" alt="136スタジオ">
+<div class="heroText"><div class="brand">136<span>STUDIO</span></div><h1>好きな時間に、<br>好きなスタイルで。</h1><p>ダンス・ヨガ・フィットネス・個人練習など、<br>さまざまな用途でご利用いただけるレンタルスタジオです。</p></div>
+</section>
+<div class="info">
+<div><b>年中無休</b><span>9:00〜21:30</span></div>
+<div><b>1時間 1,200円</b><span>前後15分サービス</span></div>
+<div><b>PayPayのみ</b><span>予約後にQRコードでお支払い</span></div>
+<div><b>会員登録制</b><span>スマホから簡単予約</span></div>
+</div>
+
+<div class="wrap">
+<section id="home" class="page">
+<div id="loginNotice" class="card"></div>
+<div id="booking" class="card hidden"><div style="text-align:center;margin-bottom:14px"><img src="/assets/logo.png" alt="136 STUDIO" style="width:170px;max-width:70%;height:auto"></div>
+<h2>スタジオを予約</h2><p class="small">予約時間60分＋前15分・後15分が無料です。</p>
+<label for="date">日付</label><input id="date" type="date" onchange="changeDate()">
+<h3>スタジオを選択</h3>
+<div class="room">
+<button id="roomA" onclick="pickRoom('A')"><img src="136_studio.jpg" alt="136スタジオ"><div class="rbody"><b>136スタジオ</b><p>ダンス・ヨガ・フィットネス・個人練習など</p></div></button>
+<button id="roomB" onclick="pickRoom('B')"><img src="136_personal.jpg" alt="136パーソナルトレーニングスペース"><div class="rbody"><b>136パーソナルトレーニングスペース</b><p>トレーニング・個別指導など</p></div></button>
+</div>
+<h3>予約時間</h3><div id="slots" class="slots"></div>
+<div id="selected" class="ok hidden" style="margin-top:12px"></div>
+<div class="terms-consent" style="margin-top:16px;padding:14px;border:1px solid #ddd;border-radius:12px;background:#fafafa">
+<label style="display:flex;gap:10px;align-items:flex-start;cursor:pointer"><input id="termsAgree" type="checkbox" style="margin-top:4px;width:18px;height:18px"><span>利用規約を確認し、内容に同意します。<br><button type="button" onclick="openTerms(event)" style="border:0;background:none;padding:4px 0;color:#555;text-decoration:underline;cursor:pointer">利用規約を読む</button></span></label>
+</div>
+<button class="primary" style="margin-top:12px" id="reserveButton" onclick="reserve()">予約内容を確認する</button>
+</div>
+
+<div id="auth" class="card">
+<div class="tabs"><button id="tabLogin" class="on" onclick="authTab('login')">ログイン</button><button id="tabReg" onclick="authTab('reg')">新規会員登録</button></div>
+<div id="loginBox"><label>メールアドレス</label><input id="lemail" type="email"><label>パスワード</label><input id="lpass" type="password"><button class="primary" onclick="login()">ログイン</button><p id="lmsg"></p></div>
+<div id="regBox" class="hidden"><label>氏名</label><input id="rname"><label>メールアドレス</label><input id="remail" type="email"><label>パスワード（8文字以上）</label><input id="rpass" type="password" autocomplete="new-password" minlength="8"><label>電話番号</label><input id="rphone"><button class="primary" onclick="register()">会員登録する</button><p id="rmsg"></p></div>
+</div>
+</section>
+<section id="mypage" class="page hidden"><div class="card"><h2>マイページ</h2><div id="member"></div><button onclick="logout()" style="margin-top:10px">ログアウト</button></div><div class="card"><h3>予約履歴</h3><div id="history"></div></div></section>
+</div>
+
+<div id="paypayModal" class="modal hidden"><div class="modalCard" style="max-width:560px"><div style="display:flex;justify-content:space-between;align-items:center;gap:12px"><h2 style="margin:0">PayPayでお支払い</h2><button onclick="closePaypay()" style="font-size:24px;border:0;background:none;cursor:pointer">×</button></div><p class="small">予約を登録しました。選んだ部屋のQRコードから1,200円をお支払いください。決済状況は自動確認されません。</p><div id="paypaySummary" class="card" style="margin:12px 0"></div><div class="paypayBox"><img id="paypayQRImg" src="/assets/paypay-A.png" alt="PayPay QRコード"><div class="paypaySteps"><b>お支払い金額：1,200円</b><br>① PayPayアプリを開く<br>② QRコードを読み取る<br>③ <b>1,200円</b>を入力して支払う<br>④ お支払い状況は運営者が確認します<br><a id="paypayLink" class="paypayBtn" href="https://qr.paypay.ne.jp/28180105pFKugJcXRiFHWQGk" target="_blank" rel="noopener">PayPay支払いページを開く</a></div></div><p id="paypayInstruction" class="small" style="margin-top:12px">※選択した部屋のお支払い用QRコードです。予約登録済みです。お支払い状況は運営者が確認します。</p><div style="display:flex;gap:10px;justify-content:flex-end;margin-top:16px"><button onclick="closePaypay()">戻る</button><button class="primary" onclick="completePayment()">支払い案内を閉じる</button></div></div></div>
+<div id="termsModal" class="hidden" style="position:fixed;inset:0;background:rgba(0,0,0,.55);z-index:9999;padding:18px;overflow:auto">
+  <div style="max-width:760px;margin:20px auto;background:#fff;border-radius:18px;padding:22px;box-shadow:0 10px 40px rgba(0,0,0,.2)">
+    <div style="display:flex;justify-content:space-between;align-items:center;gap:12px"><h2 style="margin:0">136スタジオ・136パーソナルトレーニングスペース 利用規約</h2><button onclick="closeTerms()" style="font-size:24px;border:0;background:none;cursor:pointer">×</button></div>
+    <p class="small">予約前に必ずご確認ください。予約を確定することで、本規約に同意したものとします。</p>
+    <div style="max-height:65vh;overflow:auto;padding-right:8px;line-height:1.75;font-size:14px">
+      <h3>第1条　利用について</h3><p>本施設は、予約した時間および予約時に申告した目的の範囲内で利用するものとします。利用時間を超えて利用することはできません。本施設の利用は一時的な施設利用であり、賃借権、所有権その他の権利を発生させるものではありません。</p>
+      <h3>第2条　予約・利用料金</h3><p>予約は当社が定める方法により行うものとします。利用料金は予約時に表示される料金を適用します。支払いに伴う手数料等が発生する場合は利用者の負担とします。利用料金等は、物価、諸経費、固定費、利用状況等により変更する場合があります。</p>
+      <h3>第3条　利用時間・入退室</h3><p>利用時間を厳守してください。利用時間には準備・片付け・清掃・退室までの時間を含みます。利用終了時には次の利用者が利用できる状態にして、速やかに退室してください。</p>
+      <h3>第4条　清掃・原状回復</h3><p>利用終了後、清掃、ゴミの搬出および原状回復を行ってください。家具・備品等を移動した場合は元の位置に戻してください。残置物は所有権を放棄したものとして当社が処分でき、処分費用は利用者の負担とします。</p>
+      <h3>第5条　禁止事項</h3><p>申告目的以外の利用、第三者への無断使用、設備・備品の乱雑な使用・持ち帰り、使用禁止場所への侵入、利用時間外の無断利用、虚偽報告、個人情報・秘密情報の漏洩、近隣への迷惑行為、無断駐車、無許可販売・客引き、飲酒・喫煙に関する禁止行為、当社の信用を損なう行為、勧誘・集客行為、法令違反、食品衛生上の問題を生じさせる行為等を禁止します。</p>
+      <h3>第6条　飲食・販売</h3><p>カフェ営業、飲食物の販売等は原則として許可していません。ただし、イベント等で当社が必要と認め、事前に許可した場合は別途条件により利用できる場合があります。</p>
+      <h3>第7条　駐車場</h3><p>本施設周辺の駐車場は当社の契約範囲ではありません。利用者および顧客等による無断駐車を禁止します。</p>
+      <h3>第8条　設備・備品の破損等</h3><p>利用者または顧客等の故意・過失により設備・備品等に損害が発生した場合、利用者は修理・交換等に要する実費を負担するものとします。</p>
+      <h3>第9条　事故・盗難等</h3><p>利用中に発生した事故、食中毒、傷害、盗難、火災その他の事故については利用者の責任において対応するものとします。利用者または顧客等の金銭、貴重品、展示物その他の物品について、当社は原則として責任を負いません。</p>
+      <h3>第10条　設備・インターネット等の不具合</h3><p>設備・機器等に故障・不具合が発生した場合、使用を停止することがあります。これにより利用に支障が生じた場合であっても、当社は責任を負わないものとします。</p>
+      <h3>第11条　利用停止・契約解除</h3><p>反社会的勢力との関係、第三者への無断使用、設備・備品の故意の破損・持ち帰り、無断侵入、虚偽報告、秘密情報の漏洩、近隣への迷惑行為、法令違反、食品衛生上の問題、申告目的以外の利用、料金の1か月以上の滞納その他本規約違反があった場合、当社は通知・催告なく利用停止または契約解除等の措置をとることがあります。</p>
+      <h3>第12条　利用不能の場合</h3><p>法律の改正、天災、行政指導、工事、メンテナンスその他の事由により本施設を利用できなくなる場合があります。この場合、当社は利用者に生じた損害について責任を負わないものとします。</p>
+      <h3>第13条　利用マニュアル等</h3><p>本規約のほか、当社が別途定める利用マニュアル、衛生マニュアルその他のルールを遵守するものとします。</p>
+      <h3>第14条　規約の変更</h3><p>当社は必要に応じて本規約、利用料金、利用方法、利用マニュアル等を変更する場合があります。変更後の規約等は、当社が定める方法で告知した時点から適用するものとします。</p>
+      <h3>第15条　損害賠償</h3><p>利用者または顧客等の故意または過失により当社または第三者に損害が発生した場合、利用者はその損害を賠償する責任を負うものとします。</p>
+      <h3>第16条　準拠・管轄</h3><p>本規約に定めのない事項については、関係法令および一般的な慣習に従い、当社と利用者が誠実に協議するものとします。本規約に関する紛争については、第一審の専属的合意管轄裁判所を福井地方裁判所とします。</p>
+      <h3>第17条　予約時の同意</h3><p>本施設の予約を行うことにより、利用者は本規約の内容を確認し、同意したものとします。</p>
+      <p><b>運営者：有限会社プールド</b><br><b>施設：136スタジオ／136パーソナルトレーニングスペース</b></p>
+    </div>
+    <div style="display:flex;gap:10px;justify-content:flex-end;margin-top:16px"><button onclick="closeTerms()">閉じる</button></div>
+  </div>
+</div>
+
+<script src="/app.js" defer></script>
+</body></html>
