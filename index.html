@@ -8,6 +8,8 @@
 
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
+  <meta name="referrer" content="no-referrer">
+
   <title>136 STUDIO</title>
 
   <style>
@@ -109,8 +111,6 @@
       cursor: pointer;
 
     }
-
-    /* メイン画像 */
 
     .hero {
 
@@ -358,8 +358,6 @@
 
     }
 
-    /* スタジオ写真 */
-
     .room-image {
 
       width: 100%;
@@ -374,7 +372,7 @@
 
       margin-bottom: 14px;
 
-      background: #eee;
+      background: #e7e7e3;
 
     }
 
@@ -762,13 +760,15 @@
 
             class="room-image"
 
-            src="https://images.unsplash.com/photo-1524594152303-9fd13543fe6e?auto=format&fit=crop&w=900&q=80"
+            src="https://images.unsplash.com/photo-1524594152303-9fd13543fe6e?auto=format&fit=crop&w=1200&q=85"
 
             alt="136スタジオ"
 
-            loading="lazy"
+            loading="eager"
 
-            onerror="this.style.display='none'"
+            decoding="async"
+
+            referrerpolicy="no-referrer"
 
           >
 
@@ -796,13 +796,15 @@
 
             class="room-image"
 
-            src="https://images.unsplash.com/photo-1534438327276-14e5300c3a48?auto=format&fit=crop&w=900&q=80"
+            src="https://images.unsplash.com/photo-1534438327276-14e5300c3a48?auto=format&fit=crop&w=1200&q=85"
 
             alt="136パーソナル"
 
-            loading="lazy"
+            loading="eager"
 
-            onerror="this.style.display='none'"
+            decoding="async"
+
+            referrerpolicy="no-referrer"
 
           >
 
