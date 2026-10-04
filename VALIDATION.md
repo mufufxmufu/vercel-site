@@ -42,8 +42,10 @@ PayPay入金そのものの照合は自動化していません。予約はpendi
 
 ## Continuous booking / cancellation / administrator verification (2026-10-05)
 
-10 local checks passed, including continuous hourly billing, opening/closing buffers, grouping adjacent admin slots, malformed selection rejection and member-bound administrator authorization.
+11 local checks passed, including continuous hourly billing, opening/closing buffers, grouping adjacent admin slots, malformed selection rejection and member-bound administrator authorization.
 
 25 actual HTTP checks passed against the isolated Neon preview database: member 3-hour booking and billing, owner cancellation, rejection of another member cancellation, released-slot rebooking, simultaneous booking (one 201, one 409), administrator login, ordinary-member rejection, monthly applicant contact details, adjacent administrator batch merge, batch conflict rollback, and administrator cancellation. Test bookings were cancelled only in that isolated database. Production customer bookings were not modified by verification.
 
 Browser checked public adjacent-slot selection (09:15–12:15, 3,600 yen) and dedicated administrator login entry. Private admin calendar API was verified with a synthetic administrator in preview; production admin access requires binding the real registered member ID.
+
+Session tokens are bound to the exact serving hostname. A token minted by a preview deployment or a different public alias is rejected, and legacy sessions require a fresh login. Host separation has a dedicated regression check.
