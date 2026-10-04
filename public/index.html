@@ -42,17 +42,17 @@ input{width:100%;padding:12px;border:1px solid #ddd;border-radius:9px;margin:5px
 <div class="wrap">
 <section id="home" class="page">
 <div id="loginNotice" class="card"></div>
-<div id="booking" class="card hidden"><div style="text-align:center;margin-bottom:14px"><img src="/assets/logo.png" alt="136 STUDIO" style="width:170px;max-width:70%;height:auto"></div>
-<h2>スタジオを予約</h2><p class="small">予約時間60分＋前15分・後15分が無料です。</p>
+<div id="booking" class="card"><div style="text-align:center;margin-bottom:14px"><img src="/assets/logo.png" alt="136 STUDIO" style="width:170px;max-width:70%;height:auto"></div>
+<h2>予約状況・空き時間</h2><p class="small">予約時間60分＋前15分・後15分が無料です。</p>
 <label for="date">日付</label><input id="date" type="date" onchange="changeDate()">
 <h3>スタジオを選択</h3>
 <div class="room">
 <button id="roomA" onclick="pickRoom('A')"><img src="136_studio.jpg" alt="136スタジオ"><div class="rbody"><b>136スタジオ</b><p>ダンス・ヨガ・フィットネス・個人練習など</p></div></button>
 <button id="roomB" onclick="pickRoom('B')"><img src="136_personal.jpg" alt="136パーソナルトレーニングスペース"><div class="rbody"><b>136パーソナルトレーニングスペース</b><p>トレーニング・個別指導など</p></div></button>
 </div>
-<h3>予約時間</h3><div id="slots" class="slots"></div>
+<h3>予約時間</h3><div id="slots" class="slots" aria-live="polite">予約状況を読み込んでいます…</div>
 <div id="selected" class="ok hidden" style="margin-top:12px"></div>
-<div class="terms-consent" style="margin-top:16px;padding:14px;border:1px solid #ddd;border-radius:12px;background:#fafafa">
+<div id="termsConsent" class="terms-consent hidden" style="margin-top:16px;padding:14px;border:1px solid #ddd;border-radius:12px;background:#fafafa">
 <label style="display:flex;gap:10px;align-items:flex-start;cursor:pointer"><input id="termsAgree" type="checkbox" style="margin-top:4px;width:18px;height:18px"><span>利用規約を確認し、内容に同意します。<br><button type="button" onclick="openTerms(event)" style="border:0;background:none;padding:4px 0;color:#555;text-decoration:underline;cursor:pointer">利用規約を読む</button></span></label>
 </div>
 <button class="primary" style="margin-top:12px" id="reserveButton" onclick="reserve()">予約内容を確認する</button>
