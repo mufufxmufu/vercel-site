@@ -14,23 +14,15 @@
 
   <style>
 
-    * {
-
-      box-sizing: border-box;
-
-    }
+    * { box-sizing: border-box; }
 
     body {
 
       margin: 0;
 
-      font-family:
+      font-family: -apple-system, BlinkMacSystemFont,
 
-        -apple-system, BlinkMacSystemFont,
-
-        "Hiragino Kaku Gothic ProN",
-
-        "Yu Gothic", Meiryo, sans-serif;
+        "Hiragino Kaku Gothic ProN", "Yu Gothic", Meiryo, sans-serif;
 
       background: #f5f5f5;
 
@@ -99,12 +91,6 @@
       margin: 0 0 16px;
 
       font-size: 21px;
-
-    }
-
-    h3 {
-
-      margin-top: 0;
 
     }
 
@@ -208,9 +194,7 @@
 
     }
 
-    input,
-
-    select {
+    input, select {
 
       width: 100%;
 
@@ -259,14 +243,6 @@
       opacity: .45;
 
       cursor: not-allowed;
-
-    }
-
-    .paypay {
-
-      background: #ff003c;
-
-      color: white;
 
     }
 
@@ -334,14 +310,6 @@
 
     }
 
-    .reserved {
-
-      color: #d00;
-
-      font-weight: bold;
-
-    }
-
     footer {
 
       text-align: center;
@@ -351,22 +319,6 @@
       font-size: 12px;
 
       padding: 20px;
-
-    }
-
-    @media (max-width: 600px) {
-
-      .card {
-
-        padding: 16px;
-
-      }
-
-      header h1 {
-
-        font-size: 25px;
-
-      }
 
     }
 
@@ -392,11 +344,9 @@
 
     先にこのサイトでスタジオを予約してください。<br>
 
-    お支払いはご利用時に、現地のPayPay QRコードからお願いいたします。
+    お支払いはご利用当日に、現地のPayPay QRコードからお願いいたします。
 
   </div>
-
-  <!-- 7日間予約状況 -->
 
   <section class="card">
 
@@ -418,17 +368,11 @@
 
   </section>
 
-  <!-- 予約 -->
-
   <section class="card">
 
     <h2>スタジオ予約</h2>
 
-    <div class="price">
-
-      1時間 1,200円
-
-    </div>
+    <div class="price">1時間 1,200円</div>
 
     <p class="small">
 
@@ -444,11 +388,7 @@
 
         id="name"
 
-        name="name"
-
         type="text"
-
-        autocomplete="name"
 
         required
 
@@ -458,21 +398,11 @@
 
       <label for="date">利用日</label>
 
-      <input
-
-        id="date"
-
-        name="date"
-
-        type="date"
-
-        required
-
-      >
+      <input id="date" type="date" required>
 
       <label for="room">スタジオ</label>
 
-      <select id="room" name="room" required>
+      <select id="room" required>
 
         <option value="A">スタジオ A</option>
 
@@ -482,21 +412,13 @@
 
       <label for="time">時間</label>
 
-      <select id="time" name="time" required>
+      <select id="time" required>
 
         <option value="">時間を選択してください</option>
 
       </select>
 
-      <button
-
-        id="reserveButton"
-
-        type="submit"
-
-        class="primary"
-
-      >
+      <button id="reserveButton" type="submit" class="primary">
 
         この内容で予約する
 
@@ -507,8 +429,6 @@
     <div id="bookingStatus" class="status"></div>
 
   </section>
-
-  <!-- PayPay -->
 
   <section class="card">
 
@@ -528,17 +448,13 @@
 
       </p>
 
-      <div class="price">
-
-        1,200円
-
-      </div>
+      <div class="price">1,200円</div>
 
       <p class="small">
 
-        このサイトでPayPay決済を完了する必要はありません。<br>
+        このサイト上でPayPay決済を行う必要はありません。<br>
 
-        「予約」と「支払い」は別々に処理されます。
+        予約とお支払いは別々です。
 
       </p>
 
@@ -548,249 +464,129 @@
 
 </main>
 
-<footer>
-
-  © 136 STUDIO
-
-</footer>
+<footer>© 136 STUDIO</footer>
 
 <script>
 
-  const PRICE = 1200;
+const PRICE = 1200;
 
-  const bookingForm =
+const form = document.getElementById("bookingForm");
 
-    document.getElementById("bookingForm");
+const dateInput = document.getElementById("date");
 
-  const dateInput =
+const roomSelect = document.getElementById("room");
 
-    document.getElementById("date");
+const timeSelect = document.getElementById("time");
 
-  const roomSelect =
+const button = document.getElementById("reserveButton");
 
-    document.getElementById("room");
+const statusBox = document.getElementById("bookingStatus");
 
-  const timeSelect =
+const weekSchedule = document.getElementById("weekSchedule");
 
-    document.getElementById("time");
+function dateString(date) {
 
-  const reserveButton =
+  const y = date.getFullYear();
 
-    document.getElementById("reserveButton");
+  const m = String(date.getMonth() + 1).padStart(2, "0");
 
-  const bookingStatus =
+  const d = String(date.getDate()).padStart(2, "0");
 
-    document.getElementById("bookingStatus");
+  return `${y}-${m}-${d}`;
 
-  const weekSchedule =
+}
 
-    document.getElementById("weekSchedule");
+const today = new Date();
 
-  /* =========================
+dateInput.min = dateString(today);
 
-     日付関連
+dateInput.value = dateString(today);
 
-  ========================= */
+const max = new Date();
 
-  function localDateString(date) {
+max.setDate(max.getDate() + 60);
 
-    const y = date.getFullYear();
+dateInput.max = dateString(max);
 
-    const m =
+function buildTimes() {
 
-      String(date.getMonth() + 1).padStart(2, "0");
+  timeSelect.innerHTML =
 
-    const d =
+    '<option value="">時間を選択してください</option>';
 
-      String(date.getDate()).padStart(2, "0");
+  for (let hour = 9; hour <= 20; hour++) {
 
-    return `${y}-${m}-${d}`;
+    const time = String(hour).padStart(2, "0") + ":00";
 
-  }
+    const option = document.createElement("option");
 
-  const today = new Date();
+    option.value = time;
 
-  dateInput.min =
+    option.textContent =
 
-    localDateString(today);
+      `${time}（${String(hour).padStart(2,"0")}:45〜${String(hour+1).padStart(2,"0")}:15）`;
 
-  const maxDate =
-
-    new Date(today);
-
-  maxDate.setDate(
-
-    maxDate.getDate() + 60
-
-  );
-
-  dateInput.max =
-
-    localDateString(maxDate);
-
-  dateInput.value =
-
-    localDateString(today);
-
-  /* =========================
-
-     時間枠
-
-  ========================= */
-
-  function buildTimes() {
-
-    timeSelect.innerHTML =
-
-      '<option value="">時間を選択してください</option>';
-
-    for (let hour = 9; hour <= 20; hour++) {
-
-      const start =
-
-        String(hour).padStart(2, "0") + ":00";
-
-      const end =
-
-        String(hour + 1).padStart(2, "0") + ":00";
-
-      const option =
-
-        document.createElement("option");
-
-      option.value = start;
-
-      option.textContent =
-
-        `${start}（${String(hour).padStart(2,"0")}:45〜${String(hour + 1).padStart(2,"0")}:15）`;
-
-      timeSelect.appendChild(option);
-
-    }
+    timeSelect.appendChild(option);
 
   }
 
-  buildTimes();
+}
 
-  /* =========================
+buildTimes();
 
-     API
+async function getBookings() {
 
-  ========================= */
+  const response = await fetch("/api/bookings", {
 
-  async function getBookings() {
+    method: "GET",
 
-    try {
+    cache: "no-store"
 
-      const response =
+  });
 
-        await fetch("/api/bookings", {
+  if (!response.ok) {
 
-          method: "GET",
-
-          headers: {
-
-            "Accept": "application/json"
-
-          },
-
-          cache: "no-store"
-
-        });
-
-      if (!response.ok) {
-
-        throw new Error(
-
-          "予約情報を取得できませんでした"
-
-        );
-
-      }
-
-      const data =
-
-        await response.json();
-
-      if (Array.isArray(data)) {
-
-        return data;
-
-      }
-
-      if (Array.isArray(data.bookings)) {
-
-        return data.bookings;
-
-      }
-
-      return [];
-
-    } catch (error) {
-
-      console.error(error);
-
-      return [];
-
-    }
+    throw new Error("予約情報を取得できませんでした");
 
   }
 
-  /* =========================
+  const data = await response.json();
 
-     7日間の予約表示
+  if (Array.isArray(data)) return data;
 
-  ========================= */
+  if (Array.isArray(data.bookings)) return data.bookings;
 
-  async function renderWeek() {
+  return [];
 
-    weekSchedule.innerHTML =
+}
 
-      "予約状況を読み込み中...";
+async function renderWeek() {
 
-    const bookings =
+  try {
 
-      await getBookings();
+    const bookings = await getBookings();
 
     weekSchedule.innerHTML = "";
 
-    const weekdays =
-
-      ["日","月","火","水","木","金","土"];
+    const weekdays = ["日","月","火","水","木","金","土"];
 
     for (let i = 0; i < 7; i++) {
 
-      const day =
-
-        new Date();
+      const day = new Date();
 
       day.setHours(0,0,0,0);
 
-      day.setDate(
+      day.setDate(day.getDate() + i);
 
-        day.getDate() + i
+      const ds = dateString(day);
 
-      );
+      const card = document.createElement("div");
 
-      const dateString =
+      card.className = "day-card";
 
-        localDateString(day);
+      const title = document.createElement("div");
 
-      const card =
-
-        document.createElement("div");
-
-      card.className =
-
-        "day-card";
-
-      const title =
-
-        document.createElement("div");
-
-      title.className =
-
-        "day-title";
+      title.className = "day-title";
 
       title.textContent =
 
@@ -798,85 +594,49 @@
 
       card.appendChild(title);
 
-      const dayBookings =
+      const list = bookings
 
-        bookings
+        .filter(b => String(b.date || "").slice(0,10) === ds)
 
-          .filter(b =>
+        .sort((a,b) =>
 
-            String(b.date).slice(0,10) ===
+          String(a.time || a.start_time || "")
 
-            dateString
+            .localeCompare(String(b.time || b.start_time || ""))
 
-          )
+        );
 
-          .sort((a,b) =>
+      if (!list.length) {
 
-            String(a.time || a.start_time || "")
+        const empty = document.createElement("div");
 
-              .localeCompare(
+        empty.className = "empty";
 
-                String(b.time || b.start_time || "")
-
-              )
-
-          );
-
-      if (dayBookings.length === 0) {
-
-        const empty =
-
-          document.createElement("div");
-
-        empty.className =
-
-          "empty";
-
-        empty.textContent =
-
-          "予約なし";
+        empty.textContent = "予約なし";
 
         card.appendChild(empty);
 
       } else {
 
-        dayBookings.forEach(
+        list.forEach(b => {
 
-          booking => {
+          const item = document.createElement("div");
 
-            const item =
+          item.className = "booking-item";
 
-              document.createElement("div");
+          const room = b.room || b.studio || "";
 
-            item.className =
+          const time =
 
-              "booking-item";
+            String(b.time || b.start_time || "").slice(0,5);
 
-            const room =
+          item.textContent =
 
-              booking.room ||
+            `Studio ${room} / ${time} 予約済み`;
 
-              booking.studio ||
+          card.appendChild(item);
 
-              "";
-
-            const time =
-
-              booking.time ||
-
-              booking.start_time ||
-
-              "";
-
-            item.textContent =
-
-              `${room ? "Studio " + room + " / " : ""}${String(time).slice(0,5)} 予約済み`;
-
-            card.appendChild(item);
-
-          }
-
-        );
+        });
 
       }
 
@@ -884,393 +644,231 @@
 
     }
 
+  } catch (error) {
+
+    weekSchedule.innerHTML =
+
+      '<div class="empty">予約状況を取得できませんでした</div>';
+
   }
 
-  /* =========================
+}
 
-     空き時間更新
+async function refreshTimes() {
 
-  ========================= */
+  try {
 
-  async function refreshAvailableTimes() {
-
-    const selectedDate =
-
-      dateInput.value;
-
-    const selectedRoom =
-
-      roomSelect.value;
-
-    if (!selectedDate) {
-
-      return;
-
-    }
-
-    const bookings =
-
-      await getBookings();
+    const bookings = await getBookings();
 
     buildTimes();
 
-    const options =
+    const selectedDate = dateInput.value;
 
-      Array.from(
+    const selectedRoom = roomSelect.value;
 
-        timeSelect.options
+    Array.from(timeSelect.options).forEach(option => {
 
-      );
+      if (!option.value) return;
 
-    options.forEach(option => {
+      const booked = bookings.some(b => {
 
-      if (!option.value) {
+        const d = String(b.date || "").slice(0,10);
 
-        return;
+        const r =
 
-      }
+          String(b.room || b.studio || "").toUpperCase();
 
-      const alreadyBooked =
+        const t =
 
-        bookings.some(booking => {
+          String(b.time || b.start_time || "").slice(0,5);
 
-          const bookingDate =
+        return (
 
-            String(
+          d === selectedDate &&
 
-              booking.date || ""
+          r === selectedRoom.toUpperCase() &&
 
-            ).slice(0,10);
+          t === option.value
 
-          const bookingRoom =
+        );
 
-            String(
+      });
 
-              booking.room ||
-
-              booking.studio ||
-
-              ""
-
-            ).toUpperCase();
-
-          const bookingTime =
-
-            String(
-
-              booking.time ||
-
-              booking.start_time ||
-
-              ""
-
-            ).slice(0,5);
-
-          return (
-
-            bookingDate === selectedDate &&
-
-            bookingRoom ===
-
-              selectedRoom.toUpperCase() &&
-
-            bookingTime ===
-
-              option.value
-
-          );
-
-        });
-
-      if (alreadyBooked) {
+      if (booked) {
 
         option.disabled = true;
 
-        option.textContent +=
-
-          "【予約済み】";
+        option.textContent += "【予約済み】";
 
       }
 
     });
 
+  } catch (error) {
+
+    console.error(error);
+
   }
 
-  dateInput.addEventListener(
+}
 
-    "change",
+dateInput.addEventListener("change", refreshTimes);
 
-    refreshAvailableTimes
+roomSelect.addEventListener("change", refreshTimes);
 
-  );
+form.addEventListener("submit", async event => {
 
-  roomSelect.addEventListener(
+  event.preventDefault();
 
-    "change",
+  statusBox.className = "status";
 
-    refreshAvailableTimes
+  statusBox.textContent = "";
 
-  );
+  const name =
 
-  /* =========================
+    document.getElementById("name").value.trim();
 
-     予約登録
+  const date = dateInput.value;
 
-  ========================= */
+  const room = roomSelect.value;
 
-  bookingForm.addEventListener(
+  const time = timeSelect.value;
 
-    "submit",
+  if (!name || !date || !room || !time) {
 
-    async function(event) {
+    statusBox.className = "status error";
 
-      event.preventDefault();
+    statusBox.textContent =
 
-      bookingStatus.className =
+      "すべての項目を入力してください。";
 
-        "status";
+    return;
 
-      bookingStatus.textContent =
+  }
 
-        "";
+  button.disabled = true;
 
-      const name =
+  button.textContent = "予約を登録しています...";
 
-        document
+  try {
 
-          .getElementById("name")
+    const response = await fetch("/api/bookings", {
 
-          .value
+      method: "POST",
 
-          .trim();
+      headers: {
 
-      const date =
+        "Content-Type": "application/json"
 
-        dateInput.value;
+      },
 
-      const room =
+      body: JSON.stringify({
 
-        roomSelect.value;
+        name,
 
-      const time =
+        date,
 
-        timeSelect.value;
+        room,
 
-      if (
+        time
 
-        !name ||
+      })
 
-        !date ||
+    });
 
-        !room ||
+    const text = await response.text();
 
-        !time
+    let result = {};
 
-      ) {
+    try {
 
-        bookingStatus.className =
+      result = text ? JSON.parse(text) : {};
 
-          "status error";
+    } catch {
 
-        bookingStatus.textContent =
-
-          "すべての項目を入力してください。";
-
-        return;
-
-      }
-
-      reserveButton.disabled = true;
-
-      reserveButton.textContent =
-
-        "予約を登録しています...";
-
-      try {
-
-        const response =
-
-          await fetch(
-
-            "/api/bookings",
-
-            {
-
-              method: "POST",
-
-              headers: {
-
-                "Content-Type":
-
-                  "application/json"
-
-              },
-
-              body:
-
-                JSON.stringify({
-
-                  name,
-
-                  date,
-
-                  room,
-
-                  studio: room,
-
-                  time,
-
-                  start_time: time,
-
-                  price: PRICE,
-
-                  payment:
-
-                    "現地PayPay QR",
-
-                  payment_status:
-
-                    "現地支払い",
-
-                  status:
-
-                    "予約済み"
-
-                })
-
-            }
-
-          );
-
-        let result = {};
-
-        try {
-
-          result =
-
-            await response.json();
-
-        } catch (_) {}
-
-        if (!response.ok) {
-
-          if (
-
-            response.status === 409
-
-          ) {
-
-            throw new Error(
-
-              "この時間はすでに予約されています。別の時間を選択してください。"
-
-            );
-
-          }
-
-          throw new Error(
-
-            result.error ||
-
-            result.message ||
-
-            "予約登録に失敗しました。"
-
-          );
-
-        }
-
-        bookingStatus.className =
-
-          "status ok";
-
-        bookingStatus.innerHTML =
-
-          "<strong>予約が完了しました。</strong><br>" +
-
-          date + "<br>" +
-
-          "スタジオ " + room + "<br>" +
-
-          time + "<br>" +
-
-          "料金 1,200円<br><br>" +
-
-          "お支払いはご利用当日に、現地のPayPay QRコードからお願いいたします。";
-
-        timeSelect.value = "";
-
-        await renderWeek();
-
-        await refreshAvailableTimes();
-
-      } catch (error) {
-
-        console.error(error);
-
-        bookingStatus.className =
-
-          "status error";
-
-        bookingStatus.textContent =
-
-          error.message ||
-
-          "予約登録に失敗しました。";
-
-      } finally {
-
-        reserveButton.disabled =
-
-          false;
-
-        reserveButton.textContent =
-
-          "この内容で予約する";
-
-      }
+      result = {};
 
     }
 
-  );
+    if (!response.ok) {
 
-  /* =========================
+      if (response.status === 409) {
 
-     初期表示
+        throw new Error(
 
-  ========================= */
+          "この時間はすでに予約されています。別の時間を選択してください。"
 
-  async function initialize() {
+        );
+
+      }
+
+      throw new Error(
+
+        result.error ||
+
+        result.message ||
+
+        `予約登録に失敗しました（${response.status}）`
+
+      );
+
+    }
+
+    statusBox.className = "status ok";
+
+    statusBox.innerHTML =
+
+      "<strong>予約が完了しました。</strong><br>" +
+
+      `${date}<br>` +
+
+      `スタジオ ${room}<br>` +
+
+      `${time}<br>` +
+
+      `料金 ${PRICE.toLocaleString()}円<br><br>` +
+
+      "お支払いはご利用当日に、現地のPayPay QRコードからお願いいたします。";
 
     await renderWeek();
 
-    await refreshAvailableTimes();
+    await refreshTimes();
+
+  } catch (error) {
+
+    statusBox.className = "status error";
+
+    statusBox.textContent =
+
+      error.message || "予約登録に失敗しました。";
+
+  } finally {
+
+    button.disabled = false;
+
+    button.textContent = "この内容で予約する";
 
   }
 
-  initialize();
+});
 
-  /*
+async function initialize() {
 
-    他の利用者が予約した場合にも
+  await renderWeek();
 
-    画面を定期的に更新
+  await refreshTimes();
 
-  */
+}
 
-  setInterval(
+initialize();
 
-    async () => {
+setInterval(async () => {
 
-      await renderWeek();
+  await renderWeek();
 
-      await refreshAvailableTimes();
+  await refreshTimes();
 
-    },
-
-    30000
-
-  );
+}, 30000);
 
 </script>
 
