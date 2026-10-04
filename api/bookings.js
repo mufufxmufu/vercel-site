@@ -27,6 +27,6 @@ module.exports=async(req,res)=>{
     RETURNING id,to_char(booking_date,'YYYY-MM-DD') AS booking_date,start_time,end_time,room,status`
   ],{isolationLevel:'ReadCommitted'});
   if(!results[1].length)return res.status(409).json({error:'準備・片付け時間を含め、この時間帯は予約できません。別の時間を選択してください'});
-  return res.status(201).json({booking:results[1][0],price:1200});
+  return res.status(201).json({booking:results[1][0],price:v.price});
  }catch(error){if(['23505','23P01'].includes(error.code))return res.status(409).json({error:'この時間帯は予約済みです'});return fail(res,error,'予約処理に失敗しました');}
 };
