@@ -26,8 +26,9 @@ module.exports=async(req,res)=>{
     FROM jsonb_to_recordset(${JSON.stringify(v.ranges.map(r=>({start:r.start,finish:r.end})))}::jsonb) AS x(start text,finish text)
     WHERE EXISTS(SELECT 1 FROM users WHERE id=${uid})
     AND NOT EXISTS(SELECT 1 FROM bookings WHERE booking_date=${v.date}::date AND room=${v.room} AND status::text IN ('pending_payment','confirmed','paid')
-     AND start_time-interval '15 minutes'<${v.end}::time+interval '15 minutes'
-     AND end_time+interval '15 minutes'>${v.start}::time-interval '15 minutes')
+     AND EXISTS(SELECT 1 FROM jsonb_to_recordset(${JSON.stringify(v.ranges.map(r=>({start:r.start,finish:r.end})))}::jsonb) AS frame(start text,finish text)
+      WHERE start_time-interval '15 minutes'<LEAST(frame.finish::time+interval '15 minutes','22:00'::time)
+      AND LEAST(end_time+interval '15 minutes','22:00'::time)>frame.start::time-interval '15 minutes'))
     RETURNING id,to_char(booking_date,'YYYY-MM-DD') AS booking_date,start_time,end_time,room,status`
   ],{isolationLevel:'ReadCommitted'});
   if(!results[1].length)return res.status(409).json({error:'準備・片付け時間を含め、この時間帯は予約できません。別の時間を選択してください'});
