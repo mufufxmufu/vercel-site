@@ -5,16 +5,16 @@ const now=Date.parse('2026-10-04T15:00:00+09:00');
 const valid={date:'2026-10-05',room:'A',start:'09:00',termsAccepted:true};
 test('booking includes a full hour and validates opening/closing buffers',()=>{
  assert.equal(validateBooking(valid,now).end,'10:00');
- assert.equal(validateBooking({...valid,start:'19:30'},now).end,'20:30');
- for(const start of ['09:15','08:00','20:00','21:00','10:45','bad'])assert.ok(validateBooking({...valid,start},now).error);
+ assert.equal(validateBooking({...valid,start:'21:00'},now).end,'22:00');
+ for(const start of ['09:15','08:00','20:00','22:00','10:45','bad'])assert.ok(validateBooking({...valid,start},now).error);
 });
 test('reject invalid calendar dates, past preparation, missing consent and too-far date',()=>{
  for(const body of [{...valid,date:'2026-02-30'},{...valid,date:'2026-10-04',start:'14:00'},{...valid,termsAccepted:false},{...valid,date:'2027-01-01'},{...valid,room:'C'}])assert.ok(validateBooking(body,now).error);
 });
-test('90-minute blocks allow adjacent reservations while retaining buffers',()=>{
+test('two-hour-spaced blocks allow adjacent reservations while retaining buffers',()=>{
  const existing={start:'09:00',end:'10:00'};
  assert.equal(conflicts(existing,{start:'10:00',end:'11:00'}),true);
- assert.equal(conflicts(existing,{start:'10:30',end:'11:30'}),false);
+ assert.equal(conflicts(existing,{start:'11:00',end:'12:00'}),false);
  assert.equal(conflicts(existing,{start:'09:00',end:'10:00'}),true);
 });
 test('signed sessions accept valid cookie and reject tampering',()=>{
@@ -35,4 +35,6 @@ test('booking API refuses anonymous and cross-site writes before database access
 });
 
 
-test('all eight 90-minute blocks are available back to back for either room',()=>{for(const room of ['A','B']){const frames=validateBooking({...valid,room,hours:8},now).ranges;assert.equal(frames.length,8);assert.equal(frames.at(-1).end,'20:30');for(let i=1;i<frames.length;i++){assert.equal(conflicts(frames[i-1],frames[i]),false);assert.equal(conflicts(frames[i],frames[i-1]),false);}assert.ok(validateBooking({...valid,room,hours:9},now).error);}});
+test('all seven two-hour-spaced blocks are available back to back for either room',()=>{for(const room of ['A','B']){const frames=validateBooking({...valid,room,hours:7},now).ranges;assert.equal(frames.length,7);assert.equal(frames.at(-1).end,'22:00');for(let i=1;i<frames.length;i++){assert.equal(conflicts(frames[i-1],frames[i]),false);assert.equal(conflicts(frames[i],frames[i-1]),false);}assert.ok(validateBooking({...valid,room,hours:8},now).error);}});
+
+test('entry-exit gaps are thirty minutes and final exit stops at 22:00',()=>{const {exitMinutes,timeMinutes}=require('../lib/rules');const frames=validateBooking({...valid,hours:7},now).ranges;for(let i=1;i<frames.length;i++)assert.equal(timeMinutes(frames[i].start)-15-exitMinutes(frames[i-1].end),30);assert.equal(exitMinutes(frames.at(-1).end),1320);assert.equal(validateBooking({...valid,start:'19:00',hours:2},now).price,2400);assert.ok(validateBooking({...valid,start:'21:00',hours:2},now).error);});
