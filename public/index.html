@@ -43,14 +43,14 @@ input{width:100%;padding:12px;border:1px solid #ddd;border-radius:9px;margin:5px
 <section id="home" class="page">
 <div id="loginNotice" class="card"></div>
 <div id="booking" class="card"><div style="text-align:center;margin-bottom:14px"><img src="/assets/logo.png" alt="136 STUDIO" style="width:170px;max-width:70%;height:auto"></div>
-<h2>予約状況・空き時間</h2><p class="small">利用者の予約は今日から1カ月先まで。60分単位で連続予約できます。準備・片付けは前後15分ずつ無料です。</p>
+<h2>予約状況・空き時間</h2><p class="small">利用者の予約は今日から1カ月先まで。1枠90分（利用60分＋前後15分）で、隣り合う枠を連続予約できます。準備・片付けは前後15分ずつ無料です。</p>
 <label for="date">日付</label><input id="date" type="date" onchange="changeDate()">
 <h3>スタジオを選択</h3>
 <div class="room">
 <button id="roomA" onclick="pickRoom('A')"><img src="136_studio.jpg" alt="136スタジオ"><div class="rbody"><b>136スタジオ</b><p>ダンス・ヨガ・フィットネス・個人練習など</p></div></button>
 <button id="roomB" onclick="pickRoom('B')"><img src="136_personal.jpg" alt="136パーソナルトレーニングスペース"><div class="rbody"><b>136パーソナルトレーニングスペース</b><p>トレーニング・個別指導など</p></div></button>
 </div>
-<h3>予約時間</h3><p class="small">開始枠と最後の枠をタップして連続予約できます。1時間1,200円です。</p><button type="button" onclick="clearRange()">選択をやり直す</button><div id="slots" class="slots" aria-live="polite">予約状況を読み込んでいます…</div>
+<h3>予約時間</h3><p class="small">開始枠と最後の枠をタップして連続予約できます。1枠1,200円です。各枠は入室から退室まで90分です。</p><button type="button" onclick="clearRange()">選択をやり直す</button><div id="slots" class="slots" aria-live="polite">予約状況を読み込んでいます…</div>
 <div id="selected" class="ok hidden" style="margin-top:12px"></div>
 <div id="termsConsent" class="terms-consent hidden" style="margin-top:16px;padding:14px;border:1px solid #ddd;border-radius:12px;background:#fafafa">
 <label style="display:flex;gap:10px;align-items:flex-start;cursor:pointer"><input id="termsAgree" type="checkbox" style="margin-top:4px;width:18px;height:18px"><span>利用規約を確認し、内容に同意します。<br><button type="button" onclick="openTerms(event)" style="border:0;background:none;padding:4px 0;color:#555;text-decoration:underline;cursor:pointer">利用規約を読む</button></span></label>
