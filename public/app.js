@@ -2,7 +2,7 @@
 const $=id=>document.getElementById(id);
 const roomNames={A:'136スタジオ',B:'136パーソナルトレーニングスペース'};
 const paypayURL={A:'https://qr.paypay.ne.jp/28180105pFKugJcXRiFHWQGk',B:'https://qr.paypay.ne.jp/28180105Kemx3d5r910Tbx3c'};
-let currentUser=null,room='A',selected=null,selectedHours=1,busy=false,slotRequest=0,slotsReady=false,booked=[];
+let currentUser=null,room='A',selected=null,selectedBlocks=1,busy=false,slotRequest=0,slotsReady=false,booked=[];
 function bookingDeadline(date,months){const [y,m,d]=date.split('-').map(Number),first=new Date(Date.UTC(y,m-1+months,1)),last=new Date(Date.UTC(first.getUTCFullYear(),first.getUTCMonth()+1,0)).getUTCDate();first.setUTCDate(Math.min(d,last));return first.toISOString().slice(0,10);}
 const japanDate=()=>new Date(Date.now()+9*3600000).toISOString().slice(0,10);
 const minutes=s=>Number(s.slice(0,2))*60+Number(s.slice(3,5));
@@ -26,31 +26,32 @@ async function init(){
  $('date').max=bookingDeadline(today,currentUser?.isAdmin?3:1);if($('date').value>$('date').max){$('date').value=$('date').max;resetSelection();await renderSlots();}
  $('termsConsent').classList.toggle('hidden',!currentUser);$('reserveButton').textContent=currentUser?'予約内容を確認する':'ログインして予約する';await availability;
 }
-function resetSelection(){selected=null;selectedHours=1;$('selected').classList.add('hidden');$('termsAgree').checked=false;}
+function resetSelection(){selected=null;selectedBlocks=1;$('selected').classList.add('hidden');$('termsAgree').checked=false;}
 function changeDate(){resetSelection();renderSlots();}
 function pickRoom(r){room=r;resetSelection();$('roomA').classList.toggle('sel',r==='A');$('roomB').classList.toggle('sel',r==='B');renderSlots();}
 function unavailable(s,d){if(d<japanDate()||d>bookingDeadline(japanDate(),currentUser?.isAdmin?3:1))return true;const m=minutes(s);if(Date.parse(d+'T'+time(m-15)+':00+09:00')<=Date.now())return true;return booked.some(b=>m-15<minutes(b.end)+15&&m+75>minutes(b.start)-15);}
 async function renderSlots(){
  const d=$('date').value,r=room,request=++slotRequest;if(!d)return;
  slotsReady=false;$('reserveButton').disabled=true;$('slots').textContent='予約状況を読み込んでいます…';
- try{const data=await api('/api/slots?date='+encodeURIComponent(d)+'&room='+r);if(request!==slotRequest)return;booked=data.booked;if(selected&&rangeUnavailable(selected,selectedHours,d))resetSelection();
- $('slots').replaceChildren();for(let h=9;h<=20;h++){const s=time(h*60),disabled=unavailable(s,d),button=document.createElement('button');button.type='button';button.dataset.start=s;button.className='slot'+(disabled?' busy':'')+(selected===s?' sel':'');button.disabled=disabled;button.innerHTML=time(h*60-15)+'〜'+time(h*60+75)+'<br><span class="small">'+(disabled?'予約不可':'空き')+'</span>';button.onclick=()=>pickSlot(s);$('slots').appendChild(button);}updateSelected();renderSlotButtons();slotsReady=true;$('reserveButton').disabled=busy;
+ try{const data=await api('/api/slots?date='+encodeURIComponent(d)+'&room='+r);if(request!==slotRequest)return;booked=data.booked;if(selected&&rangeUnavailable(selected,selectedBlocks,d))resetSelection();
+ $('slots').replaceChildren();for(let m=9*60;m+75<=21*60+30;m+=90){const s=time(m),disabled=unavailable(s,d),button=document.createElement('button');button.type='button';button.dataset.start=s;button.className='slot'+(disabled?' busy':'')+(selected===s?' sel':'');button.disabled=disabled;button.innerHTML=time(m-15)+'〜'+time(m+75)+'<br><span class="small">'+(disabled?'予約不可':'空き')+'</span>';button.onclick=()=>pickSlot(s);$('slots').appendChild(button);}updateSelected();renderSlotButtons();slotsReady=true;$('reserveButton').disabled=busy;
  }catch(e){if(request!==slotRequest)return;resetSelection();$('slots').textContent=e.message;$('reserveButton').disabled=true;}
 }
-function updateSelected(){if(!selected)return;const m=minutes(selected),end=m+selectedHours*60;$('selected').classList.remove('hidden');$('selected').innerHTML='<b>'+roomNames[room]+'</b><br>'+$('date').value+'　'+selected+'〜'+time(end)+'（'+selectedHours+'時間）<br>入室〜退室：'+time(m-15)+'〜'+time(end+15)+'<br>準備：'+time(m-15)+'〜'+selected+'／片付け：'+time(end)+'〜'+time(end+15)+'<br><b>'+ (selectedHours*1200).toLocaleString()+'円</b>';}
-function rangeUnavailable(start,hours,d){const m=minutes(start),end=m+hours*60;return d<japanDate()||d>bookingDeadline(japanDate(),currentUser?.isAdmin?3:1)||end+15>21*60+30||Date.parse(d+'T'+time(m-15)+':00+09:00')<=Date.now()||booked.some(b=>m-15<minutes(b.end)+15&&end+15>minutes(b.start)-15);}
-function pickSlot(s){if(busy)return;if(!selected){if(unavailable(s,$('date').value))return;selected=s;selectedHours=1;}else{const a=Math.min(minutes(selected),minutes(s)),end=Math.max(minutes(selected)+selectedHours*60,minutes(s)+60),hours=(end-a)/60;if(rangeUnavailable(time(a),hours,$('date').value)){alert('選んだ範囲に予約・準備・片付け時間が重なっています。');return;}if(selected===s&&selectedHours===1){resetSelection();renderSlots();return;}selected=time(a);selectedHours=hours;}updateSelected();renderSlotButtons();}
-function renderSlotButtons(){document.querySelectorAll('.slot').forEach(b=>{const s=b.dataset.start,m=minutes(s),inRange=selected&&m>=minutes(selected)&&m<minutes(selected)+selectedHours*60;b.classList.toggle('sel',!!inRange);if(selected){const a=Math.min(minutes(selected),m),end=Math.max(minutes(selected)+selectedHours*60,m+60);b.disabled=rangeUnavailable(time(a),(end-a)/60,$('date').value);}else b.disabled=unavailable(s,$('date').value);});}
+function selectedIntervals(){return Array.from({length:selectedBlocks},(_,i)=>{const m=minutes(selected)+i*90;return {start:time(m),end:time(m+60),entry:time(m-15),exit:time(m+75)};});}
+function updateSelected(){if(!selected)return;const frames=selectedIntervals();$('selected').classList.remove('hidden');$('selected').innerHTML='<b>'+roomNames[room]+'</b><br>'+$('date').value+' ／ '+selectedBlocks+'枠（1枠：利用60分＋前後15分）<br>'+frames.map(f=>'入室〜退室：'+f.entry+'〜'+f.exit+'<br>利用：'+f.start+'〜'+f.end).join('<br>')+'<br><b>'+(selectedBlocks*1200).toLocaleString()+'円</b>';}
+function rangeUnavailable(start,hours,d){const m=minutes(start),end=m+(hours-1)*90+60;return d<japanDate()||d>bookingDeadline(japanDate(),currentUser?.isAdmin?3:1)||end+15>21*60+30||Date.parse(d+'T'+time(m-15)+':00+09:00')<=Date.now()||booked.some(b=>m-15<minutes(b.end)+15&&end+15>minutes(b.start)-15);}
+function pickSlot(s){if(busy)return;if(!selected){if(unavailable(s,$('date').value))return;selected=s;selectedBlocks=1;}else{const a=Math.min(minutes(selected),minutes(s)),end=Math.max(minutes(selected)+(selectedBlocks-1)*90+60,minutes(s)+60),hours=(end-a+30)/90;if(rangeUnavailable(time(a),hours,$('date').value)){alert('選んだ範囲に予約・準備・片付け時間が重なっています。');return;}if(selected===s&&selectedBlocks===1){resetSelection();renderSlots();return;}selected=time(a);selectedBlocks=hours;}updateSelected();renderSlotButtons();}
+function renderSlotButtons(){document.querySelectorAll('.slot').forEach(b=>{const s=b.dataset.start,m=minutes(s),inRange=selected&&m>=minutes(selected)&&m<minutes(selected)+selectedBlocks*90;b.classList.toggle('sel',!!inRange);if(selected){const a=Math.min(minutes(selected),m),end=Math.max(minutes(selected)+(selectedBlocks-1)*90+60,m+60);b.disabled=rangeUnavailable(time(a),(end-a+30)/90,$('date').value);}else b.disabled=unavailable(s,$('date').value);});}
 function clearRange(){resetSelection();renderSlots();}
 function openTerms(e){e?.preventDefault();$('termsModal').classList.remove('hidden');}
 function closeTerms(){$('termsModal').classList.add('hidden');}
 async function reserve(){
  if(busy)return;if(!currentUser){show('home');authTab('login');$('lmsg').textContent='予約にはログインまたは新規会員登録が必要です。';$('auth').scrollIntoView({behavior:'smooth',block:'start'});return;}if(!selected){alert('予約時間を選択してください');return;}if(!$('termsAgree').checked){alert('利用規約を確認して同意してください');openTerms();return;}
- const request={date:$('date').value,room,start:selected,hours:selectedHours,termsAccepted:true},m=minutes(selected),duration=selectedHours*60,price=selectedHours*1200;
- if(!confirm(roomNames[room]+'\n'+request.date+'　'+selected+'〜'+time(m+duration)+'\n入室〜退室：'+time(m-15)+'〜'+time(m+duration+15)+'\n料金：'+price.toLocaleString()+'円\n\nこの内容で予約を登録しますか？'))return;
+ const request={date:$('date').value,room,start:selected,hours:selectedBlocks,termsAccepted:true},m=minutes(selected),duration=(selectedBlocks-1)*90+60,price=selectedBlocks*1200;
+ if(!confirm(roomNames[room]+'\n'+request.date+'　'+selectedBlocks+'枠\n'+selectedIntervals().map(f=>'入室〜退室：'+f.entry+'〜'+f.exit+'（利用 '+f.start+'〜'+f.end+'）').join('\n')+'\n料金：'+price.toLocaleString()+'円\n\nこの内容で予約を登録しますか？'))return;
  busy=true;$('reserveButton').disabled=true;$('reserveButton').textContent='予約を登録しています…';
  try{const data=await api('/api/bookings',{method:'POST',body:JSON.stringify(request)});if(!data.booking?.id)throw new Error('予約番号を確認できませんでした。マイページで予約履歴を確認してください');
-  $('paypaySummary').innerHTML='<b>予約登録完了</b><br>予約番号：'+escapeHtml(data.booking.id)+'<br>'+roomNames[request.room]+'<br>'+request.date+'　'+request.start+'〜'+time(m+duration)+'<br>入室〜退室：'+time(m-15)+'〜'+time(m+duration+15)+'<br><b>'+price.toLocaleString()+'円（PayPay支払い待ち）</b>';
+  $('paypaySummary').innerHTML='<b>予約登録完了</b><br>予約番号：'+(data.bookings||[data.booking]).map(b=>escapeHtml(b.id)).join('、')+'<br>'+roomNames[request.room]+'<br>'+request.date+' ／ '+selectedBlocks+'枠<br>'+selectedIntervals().map(f=>'入室〜退室：'+f.entry+'〜'+f.exit+'（利用 '+f.start+'〜'+f.end+'）').join('<br>')+'<br><b>'+price.toLocaleString()+'円（PayPay支払い待ち）</b>';
   $('paymentAmount').textContent=price.toLocaleString()+'円';$('paymentInput').textContent=price.toLocaleString()+'円';$('paymentNotice').textContent='予約を登録しました。選んだ部屋のQRコードから'+price.toLocaleString()+'円をお支払いください。決済状況は自動確認されません。';$('paypayQRImg').src='/assets/paypay-'+request.room+'.png';$('paypayQRImg').alt=roomNames[request.room]+' PayPay QRコード';$('paypayLink').href=paypayURL[request.room];$('paypayInstruction').textContent='※'+roomNames[request.room]+'の支払い先です。支払い状況は運営者が確認します。';$('paypayModal').classList.remove('hidden');resetSelection();
  }catch(e){alert(e.message);if(e.status===401)await init();}
  finally{busy=false;$('reserveButton').textContent='予約内容を確認する';await renderSlots();if(currentUser)await renderMy();}
