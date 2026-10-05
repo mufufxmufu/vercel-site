@@ -49,3 +49,7 @@ PayPay入金そのものの照合は自動化していません。予約はpendi
 Browser checked public adjacent-slot selection (09:15–12:15, 3,600 yen) and dedicated administrator login entry. Private admin calendar API was verified with a synthetic administrator in preview; production admin access requires binding the real registered member ID.
 
 Session tokens are bound to the exact serving hostname. A token minted by a preview deployment or a different public alias is rejected, and legacy sessions require a fresh login. Host separation has a dedicated regression check.
+
+## Role booking windows (2026-10-05)
+
+12 local checks pass. Added inclusive one-month member and three-month administrator deadlines, month-end clamping, leap-year February and cross-year boundaries. Both member UI and monthly administrator UI disable out-of-window dates; POST validation independently enforces the limits. Historical administrator viewing and cancellation are retained.

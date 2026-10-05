@@ -1,4 +1,5 @@
 const {sql}=require('../lib/db');
+const {isAdmin}=require('../lib/admin');
 const {requireUser}=require('../lib/auth');
 const {postAllowed,fail}=require('../lib/http');
 const {validateBooking}=require('../lib/rules');
@@ -13,7 +14,9 @@ module.exports=async(req,res)=>{
    const rows=await q`SELECT id,to_char(booking_date,'YYYY-MM-DD') AS booking_date,start_time,end_time,room,status FROM bookings WHERE user_id=${uid} ORDER BY booking_date DESC,start_time DESC`;
    return res.json({bookings:rows});
   }
-  const v=validateBooking(req.body);if(v.error)return res.status(400).json({error:v.error});
+  const members=await q`SELECT id,email FROM users WHERE id=${uid}`;
+  if(!members.length)return res.status(401).json({error:'ログインし直してください'});
+  const v=validateBooking(req.body,Date.now(),isAdmin(members[0])?3:1);if(v.error)return res.status(400).json({error:v.error});
   // Separate statements are essential: after waiting for the lock, READ COMMITTED
   // takes a new snapshot for the INSERT and sees the previous request's booking.
   const results=await q.transaction([
