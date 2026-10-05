@@ -1,5 +1,6 @@
 {
   "outputDirectory": "public",
+  "buildCommand": "npm test && node cancel-existing-bookings.js",
   "functions": {
     "api/**/*.js": {
       "maxDuration": 30

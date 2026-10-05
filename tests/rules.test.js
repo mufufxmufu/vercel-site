@@ -2,20 +2,20 @@ const test=require('node:test');const assert=require('node:assert/strict');
 const {validateBooking,conflicts}=require('../lib/rules');
 const auth=require('../lib/auth');
 const now=Date.parse('2026-10-04T15:00:00+09:00');
-const valid={date:'2026-10-05',room:'A',start:'09:15',termsAccepted:true};
+const valid={date:'2026-10-05',room:'A',start:'09:00',termsAccepted:true};
 test('booking includes a full hour and validates opening/closing buffers',()=>{
- assert.equal(validateBooking(valid,now).end,'10:15');
- assert.equal(validateBooking({...valid,start:'20:15'},now).end,'21:15');
- for(const start of ['09:00','08:15','21:15','10:45','bad'])assert.ok(validateBooking({...valid,start},now).error);
+ assert.equal(validateBooking(valid,now).end,'10:00');
+ assert.equal(validateBooking({...valid,start:'20:00'},now).end,'21:00');
+ for(const start of ['09:15','08:00','21:00','10:45','bad'])assert.ok(validateBooking({...valid,start},now).error);
 });
 test('reject invalid calendar dates, past preparation, missing consent and too-far date',()=>{
- for(const body of [{...valid,date:'2026-02-30'},{...valid,date:'2026-10-04',start:'15:15'},{...valid,termsAccepted:false},{...valid,date:'2027-01-01'},{...valid,room:'C'}])assert.ok(validateBooking(body,now).error);
+ for(const body of [{...valid,date:'2026-02-30'},{...valid,date:'2026-10-04',start:'14:00'},{...valid,termsAccepted:false},{...valid,date:'2027-01-01'},{...valid,room:'C'}])assert.ok(validateBooking(body,now).error);
 });
 test('buffers block adjacent hours and permit the next non-overlapping interval',()=>{
- const existing={start:'09:15',end:'10:15'};
- assert.equal(conflicts(existing,{start:'10:15',end:'11:15'}),true);
+ const existing={start:'09:00',end:'10:00'};
+ assert.equal(conflicts(existing,{start:'10:00',end:'11:00'}),true);
  assert.equal(conflicts(existing,{start:'10:45',end:'11:45'}),false);
- assert.equal(conflicts(existing,{start:'09:15',end:'10:15'}),true);
+ assert.equal(conflicts(existing,{start:'09:00',end:'10:00'}),true);
 });
 test('signed sessions accept valid cookie and reject tampering',()=>{
  process.env.AUTH_SECRET='a'.repeat(64);let cookie;
@@ -33,3 +33,4 @@ test('booking API refuses anonymous and cross-site writes before database access
  let res=response();await handler({method:'POST',headers:{'content-type':'application/json',host:'studio.test'},body:valid},res);assert.equal(res.statusCode,401);assert.equal(res.body.error,'ログインが必要です');
  res=response();await handler({method:'POST',headers:{'content-type':'application/json',host:'studio.test',origin:'https://other.test'},body:valid},res);assert.equal(res.code,403);
 });
+
