@@ -3,6 +3,7 @@ const $=id=>document.getElementById(id);
 const roomNames={A:'136スタジオ',B:'136パーソナルトレーニングスペース'};
 const paypayURL={A:'https://qr.paypay.ne.jp/28180105pFKugJcXRiFHWQGk',B:'https://qr.paypay.ne.jp/28180105Kemx3d5r910Tbx3c'};
 let currentUser=null,room='A',selected=null,selectedHours=1,busy=false,slotRequest=0,slotsReady=false,booked=[];
+function bookingDeadline(date,months){const [y,m,d]=date.split('-').map(Number),first=new Date(Date.UTC(y,m-1+months,1)),last=new Date(Date.UTC(first.getUTCFullYear(),first.getUTCMonth()+1,0)).getUTCDate();first.setUTCDate(Math.min(d,last));return first.toISOString().slice(0,10);}
 const japanDate=()=>new Date(Date.now()+9*3600000).toISOString().slice(0,10);
 const minutes=s=>Number(s.slice(0,2))*60+Number(s.slice(3,5));
 const time=m=>String(Math.floor(m/60)).padStart(2,'0')+':'+String(m%60).padStart(2,'0');
@@ -18,16 +19,17 @@ async function register(){if(busy)return;if(!/^[0-9]{4}$/.test($('rpass').value)
 async function login(){if(busy)return;busy=true;$('lmsg').textContent='ログイン中…';try{const d=await api('/api/auth/login',{method:'POST',body:JSON.stringify({email:$('lemail').value.trim(),password:$('lpass').value})});currentUser=d.user;$('lpass').value='';$('lmsg').textContent='';await init();}catch(e){$('lmsg').textContent=e.message;}finally{busy=false;$('reserveButton').disabled=!slotsReady;}}
 async function logout(){try{await api('/api/auth/logout',{method:'POST',body:'{}'});currentUser=null;resetSelection();await init();show('home');}catch(e){alert(e.message);}}
 async function init(){
- const today=japanDate();$('date').min=today;$('date').max=new Date(Date.parse(today+'T00:00:00Z')+60*86400000).toISOString().slice(0,10);$('date').value=$('date').value||today;
+ const today=japanDate();$('date').min=today;$('date').max=bookingDeadline(today,currentUser?.isAdmin?3:1);$('date').value=$('date').value||today;
  $('booking').classList.remove('hidden');const availability=renderSlots();
  try{const d=await api('/api/me');currentUser=d.user;$('loginNotice').innerHTML='<div class="ok">ログイン中：'+escapeHtml(currentUser.name)+' さん</div>';$('booking').classList.remove('hidden');$('auth').classList.add('hidden');}
  catch(e){currentUser=null;$('loginNotice').innerHTML=e.status===401?'<h2>ご利用には会員登録が必要です</h2><p class="small">空き状況は下で確認できます。予約にはログインまたは会員登録が必要です。</p>':'<p role="alert">'+escapeHtml(e.message)+'</p>';$('auth').classList.remove('hidden');}
+ $('date').max=bookingDeadline(today,currentUser?.isAdmin?3:1);if($('date').value>$('date').max){$('date').value=$('date').max;resetSelection();await renderSlots();}
  $('termsConsent').classList.toggle('hidden',!currentUser);$('reserveButton').textContent=currentUser?'予約内容を確認する':'ログインして予約する';await availability;
 }
 function resetSelection(){selected=null;selectedHours=1;$('selected').classList.add('hidden');$('termsAgree').checked=false;}
 function changeDate(){resetSelection();renderSlots();}
 function pickRoom(r){room=r;resetSelection();$('roomA').classList.toggle('sel',r==='A');$('roomB').classList.toggle('sel',r==='B');renderSlots();}
-function unavailable(s,d){const m=minutes(s);if(Date.parse(d+'T'+time(m-15)+':00+09:00')<=Date.now())return true;return booked.some(b=>m-15<minutes(b.end)+15&&m+75>minutes(b.start)-15);}
+function unavailable(s,d){if(d<japanDate()||d>bookingDeadline(japanDate(),currentUser?.isAdmin?3:1))return true;const m=minutes(s);if(Date.parse(d+'T'+time(m-15)+':00+09:00')<=Date.now())return true;return booked.some(b=>m-15<minutes(b.end)+15&&m+75>minutes(b.start)-15);}
 async function renderSlots(){
  const d=$('date').value,r=room,request=++slotRequest;if(!d)return;
  slotsReady=false;$('reserveButton').disabled=true;$('slots').textContent='予約状況を読み込んでいます…';
@@ -36,7 +38,7 @@ async function renderSlots(){
  }catch(e){if(request!==slotRequest)return;resetSelection();$('slots').textContent=e.message;$('reserveButton').disabled=true;}
 }
 function updateSelected(){if(!selected)return;const m=minutes(selected),end=m+selectedHours*60;$('selected').classList.remove('hidden');$('selected').innerHTML='<b>'+roomNames[room]+'</b><br>'+$('date').value+'　'+selected+'〜'+time(end)+'（'+selectedHours+'時間）<br>準備：'+time(m-15)+'〜'+selected+'／片付け：'+time(end)+'〜'+time(end+15)+'<br><b>'+ (selectedHours*1200).toLocaleString()+'円</b>';}
-function rangeUnavailable(start,hours,d){const m=minutes(start),end=m+hours*60;return end+15>21*60+30||Date.parse(d+'T'+time(m-15)+':00+09:00')<=Date.now()||booked.some(b=>m-15<minutes(b.end)+15&&end+15>minutes(b.start)-15);}
+function rangeUnavailable(start,hours,d){const m=minutes(start),end=m+hours*60;return d<japanDate()||d>bookingDeadline(japanDate(),currentUser?.isAdmin?3:1)||end+15>21*60+30||Date.parse(d+'T'+time(m-15)+':00+09:00')<=Date.now()||booked.some(b=>m-15<minutes(b.end)+15&&end+15>minutes(b.start)-15);}
 function pickSlot(s){if(busy)return;if(!selected){if(unavailable(s,$('date').value))return;selected=s;selectedHours=1;}else{const a=Math.min(minutes(selected),minutes(s)),end=Math.max(minutes(selected)+selectedHours*60,minutes(s)+60),hours=(end-a)/60;if(rangeUnavailable(time(a),hours,$('date').value)){alert('選んだ範囲に予約・準備・片付け時間が重なっています。');return;}if(selected===s&&selectedHours===1){resetSelection();renderSlots();return;}selected=time(a);selectedHours=hours;}updateSelected();renderSlotButtons();}
 function renderSlotButtons(){document.querySelectorAll('.slot').forEach(b=>{const s=b.dataset.start,m=minutes(s),inRange=selected&&m>=minutes(selected)&&m<minutes(selected)+selectedHours*60;b.classList.toggle('sel',!!inRange);if(selected){const a=Math.min(minutes(selected),m),end=Math.max(minutes(selected)+selectedHours*60,m+60);b.disabled=rangeUnavailable(time(a),(end-a)/60,$('date').value);}else b.disabled=unavailable(s,$('date').value);});}
 function clearRange(){resetSelection();renderSlots();}
