@@ -22,7 +22,8 @@ module.exports=async(req,res)=>{
   const results=await q.transaction([
    q`SELECT pg_advisory_xact_lock(hashtext(${v.room+'|'+v.date}))`,
    q`INSERT INTO bookings(user_id,room,booking_date,start_time,end_time,status)
-    SELECT ${uid},${v.room},${v.date}::date,${v.start}::time,${v.end}::time,'pending_payment'
+    SELECT ${uid},${v.room},${v.date}::date,x.start::time,x.finish::time,'pending_payment'
+    FROM jsonb_to_recordset(${JSON.stringify(v.ranges.map(r=>({start:r.start,finish:r.end})))}::jsonb) AS x(start text,finish text)
     WHERE EXISTS(SELECT 1 FROM users WHERE id=${uid})
     AND NOT EXISTS(SELECT 1 FROM bookings WHERE booking_date=${v.date}::date AND room=${v.room} AND status::text IN ('pending_payment','confirmed','paid')
      AND start_time-interval '15 minutes'<${v.end}::time+interval '15 minutes'
@@ -30,6 +31,7 @@ module.exports=async(req,res)=>{
     RETURNING id,to_char(booking_date,'YYYY-MM-DD') AS booking_date,start_time,end_time,room,status`
   ],{isolationLevel:'ReadCommitted'});
   if(!results[1].length)return res.status(409).json({error:'準備・片付け時間を含め、この時間帯は予約できません。別の時間を選択してください'});
-  return res.status(201).json({booking:results[1][0],price:v.price});
+  return res.status(201).json({booking:results[1][0],bookings:results[1],price:v.price});
  }catch(error){if(['23505','23P01'].includes(error.code))return res.status(409).json({error:'この時間帯は予約済みです'});return fail(res,error,'予約処理に失敗しました');}
 };
+
